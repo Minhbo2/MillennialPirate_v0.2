@@ -3,8 +3,8 @@ using System.Collections;
 
 public enum EnemyState
 {
-    Enemy_Idle_Left,
-    Enemy_Idle_Right,
+    Enemy_Walk_Left,
+    Enemy_Walk_Right,
     Enemy_Attack,
     Enemy_Hit,
     Enemy_Dead
@@ -19,16 +19,16 @@ public class Enemy_State_Ctrl : MonoBehaviour
         melee_enemy = GameObject.Find("Melee_Enemy");
 	}
 
-    EnemyState CurrentState = EnemyState.Enemy_Idle_Left;
+    EnemyState CurrentState = EnemyState.Enemy_Walk_Left;
 
     void Update()
     {
         switch (CurrentState)
         {
-            case EnemyState.Enemy_Idle_Left:
+            case EnemyState.Enemy_Walk_Left:
                 break;
 
-            case EnemyState.Enemy_Idle_Right:
+            case EnemyState.Enemy_Walk_Right:
                 break;
 
             case EnemyState.Enemy_Attack:
@@ -51,13 +51,13 @@ public class Enemy_State_Ctrl : MonoBehaviour
     public void _FaceLeft()
     {
         melee_enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
-        SwitchEnemyState(EnemyState.Enemy_Idle_Left);
+        SwitchEnemyState(EnemyState.Enemy_Walk_Left);
     }
 
     public void _FaceRight()
     {
         melee_enemy.transform.rotation = Quaternion.Euler(0, 180, 0);
-        SwitchEnemyState(EnemyState.Enemy_Idle_Right);
+        SwitchEnemyState(EnemyState.Enemy_Walk_Right);
     }
 
     public void _Attack()
