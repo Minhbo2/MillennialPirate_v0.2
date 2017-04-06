@@ -18,9 +18,6 @@ public class BaseEnemy : MonoBehaviour
     {
         playerTrans = GameObject.Find("Player").transform.position;
 
-
-
-
     }
 	
 
@@ -46,8 +43,10 @@ public class BaseEnemy : MonoBehaviour
         if(collision.tag == "Player")
         {
             inRange = true;
+            
         }
 
     }
+
 
 }
