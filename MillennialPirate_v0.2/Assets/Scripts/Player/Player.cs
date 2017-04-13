@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
 
     private bool isSoundPlaying = false;
 
+    public bool isDodging = false;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -63,12 +65,16 @@ public class Player : MonoBehaviour
             case PlayerState.PLAYER_IDLE:
                 playerAnim.SetBool("LightAttack", false);
                 playerAnim.SetBool("HeavyAttack", false);
+                playerAnim.SetBool("Dodge", false);
                 isSoundPlaying = false;
                 StopAllCoroutines();
 
                 break;
 
             case PlayerState.PLAYER_DODGE:
+
+                StartCoroutine(DodgeDuration());
+
                 break;
 
             case PlayerState.PLAYER_ATTACK_LIGHT:
@@ -148,8 +154,11 @@ public class Player : MonoBehaviour
     {
         if(isSoundPlaying == false)
         {
-            isSoundPlaying = true;
-            playerAudioSource.PlayOneShot(lightAttackSound);
+            if (isDodging == false)
+            {
+                isSoundPlaying = true;
+                playerAudioSource.PlayOneShot(lightAttackSound);
+            }
         }
 
         playerAnim.SetBool("LightAttack", true);
@@ -168,8 +177,11 @@ public class Player : MonoBehaviour
     {
         if (isSoundPlaying == false)
         {
-            isSoundPlaying = true;
-            playerAudioSource.PlayOneShot(heavyAttackSound);
+            if (isDodging == false)
+            {
+                isSoundPlaying = true;
+                playerAudioSource.PlayOneShot(heavyAttackSound);
+            }
         }
 
         playerAnim.SetBool("HeavyAttack", true);
@@ -183,6 +195,19 @@ public class Player : MonoBehaviour
         SwitchPlayerState(PlayerState.PLAYER_IDLE);
 
         isSoundPlaying = false;
+    }
+
+    IEnumerator DodgeDuration()
+    {
+        isDodging = true;
+
+        playerAnim.SetBool("Dodge", true);
+
+        yield return new WaitForSeconds(0.25f);
+
+        isDodging = false;
+
+        SwitchPlayerState(PlayerState.PLAYER_IDLE);
     }
 
 
