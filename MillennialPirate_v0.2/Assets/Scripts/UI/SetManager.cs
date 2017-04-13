@@ -28,7 +28,7 @@ public class SetManager
         if (Inst.currentSet != null) { Inst.currentSet.gameObject.SetActive(true); }
 
         // Create the new set and mark active
-        GameObject setGO = ResourceManager.Create("UI/Sets/" + setName);
+        GameObject setGO = ResourceManager.Create("Sets/" + setName);
         if (setGO != null)
         {
             T castedSet = setGO.GetComponent<T>();
