@@ -6,6 +6,9 @@ public enum PlayerState
 {
     PLAYER_IDLE,
     PLAYER_ATTACK_LIGHT,
+    PLAYER_ATTACK_CHAIN_01,
+    PLAYER_ATTACK_CHAIN_02,
+    PLAYER_ATTACK_CHAIN_03,
     PLAYER_ATTACK_HEAVY,
     PLAYER_DODGE,
     PLAYER_HIT,
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
 
     private bool isSoundPlaying = false;
 
-    public bool isDodging = false;
+    public bool isDodging = false; 
 
     private void Start()
     {
@@ -50,6 +53,8 @@ public class Player : MonoBehaviour
 
         lightAttackSound = Resources.Load("Sounds/Player_Light_Attack") as AudioClip;
         heavyAttackSound = Resources.Load("Sounds/Player_Heavy_Attack") as AudioClip;
+
+        
     } 
 
     // The player's current state
@@ -81,6 +86,20 @@ public class Player : MonoBehaviour
 
                 StartCoroutine(LightAttackDuration());
 
+
+                break;
+
+            case PlayerState.PLAYER_ATTACK_CHAIN_01:
+
+
+                break;
+
+            case PlayerState.PLAYER_ATTACK_CHAIN_02:
+
+
+                break;
+
+            case PlayerState.PLAYER_ATTACK_CHAIN_03:
 
                 break;
 

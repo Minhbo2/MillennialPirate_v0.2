@@ -34,7 +34,7 @@ public class BaseEnemy : MonoBehaviour
     void Start ()
     {
         
-        enemy_Anim = GameObject.Find("Melee_Enemy").GetComponent<Animator>();
+        enemy_Anim = GetComponent<Animator>();
         playerTrans = GameObject.Find("Player").transform.position;
 
         enemy_Attacking = Resources.Load("Animations/EnemyAni/Melee_Enemy_Attack") as Animation;
