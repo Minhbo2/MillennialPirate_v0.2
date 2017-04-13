@@ -47,12 +47,10 @@ public class Game : MonoBehaviour
         {
             case GameState.GAME_INITIALIZING:
                 // TODO: Add all of your initialization logic here                
+                // play splash screen 
+                // loading data if any
 
-                // Load all of your data
-                //DataLoader.LoadData();
-
-                // Load main menu set
-                SetManager.OpenSet<MainMenuSet>((mms) => WantsToBeInWaitState = true);
+                SetManager.OpenSet<LevelSelectionSet>((mms) => WantsToBeInWaitState = true);
 
                 // If we want to be in the wait state, do the state transition
                 if (WantsToBeInWaitState)
@@ -69,7 +67,7 @@ public class Game : MonoBehaviour
                 break;
             case GameState.GAME_LOADING:
                 // TODO: Load the level
-                //Levels.LoadLevel("SamuraiLevel", () => WantsToBeInRunningState = true);
+                SetManager.OpenSet<LevelManager>((mms) => WantsToBeInRunningState = true);
 
                 // If we want to be in the running state, do the state transition
                 if (WantsToBeInRunningState)
@@ -87,8 +85,6 @@ public class Game : MonoBehaviour
             default:
                 Debug.Assert(false, "Invalid CurrentState for GameState in Game.cs");
                 break;
-
-
         }
     }
 

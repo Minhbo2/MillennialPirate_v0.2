@@ -108,12 +108,15 @@
     <Compile Include="Assets\Scripts\Enemy\Enemy_State_Ctrl.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
     <Compile Include="Assets\Scripts\Levels\Level01Set.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\UI\LevelIntro.cs" />
     <Compile Include="Assets\Scripts\UI\LevelSelectionSet.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenuSet.cs" />
     <Compile Include="Assets\Scripts\UI\Set.cs" />
     <Compile Include="Assets\Scripts\UI\SetManager.cs" />
+    <Compile Include="Assets\Scripts\Utility\Data.cs" />
+    <Compile Include="Assets\Scripts\Utility\DataUtility.cs" />
     <Compile Include="Assets\Scripts\Utility\ResourceManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
