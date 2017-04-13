@@ -21,6 +21,5 @@ public class MainMenuSet : Set {
 
         // Close this set and open the game set
         CloseSet();
-        SetManager.OpenSet<Level01Set>();
     }
 }
