@@ -36,7 +36,9 @@ public class Player : MonoBehaviour
 
     private bool isSoundPlaying = false;
 
-    public bool isDodging = false; 
+    public bool isDodging = false;
+
+    public int attackIndex = 1;
 
     private void Start()
     {
@@ -69,6 +71,9 @@ public class Player : MonoBehaviour
         {
             case PlayerState.PLAYER_IDLE:
                 playerAnim.SetBool("LightAttack", false);
+                playerAnim.SetBool("Attack", false);
+                playerAnim.SetBool("Attack_02", false);
+                playerAnim.SetBool("Attack_03", false);
                 playerAnim.SetBool("HeavyAttack", false);
                 playerAnim.SetBool("Dodge", false);
                 isSoundPlaying = false;
@@ -84,8 +89,8 @@ public class Player : MonoBehaviour
 
             case PlayerState.PLAYER_ATTACK_LIGHT:
 
-                StartCoroutine(LightAttackDuration());
-
+                //StartCoroutine(LightAttackDuration());
+                StartCoroutine(AttackChain());
 
                 break;
 
@@ -162,6 +167,8 @@ public class Player : MonoBehaviour
         playerAudioSource.clip = lightAttackSound;
     }
 
+    
+
     public void _HeavyAttack ()
     {
         //Player heavy attack
@@ -189,6 +196,53 @@ public class Player : MonoBehaviour
         SwitchPlayerState(PlayerState.PLAYER_IDLE);
 
         isSoundPlaying = false;
+
+    }
+
+    IEnumerator AttackChain ()
+    {
+        if (heavyAttacking == false)
+        {
+            if (attackIndex == 1)
+            {
+                playerAnim.SetBool("Attack", true);
+
+                yield return new WaitForSeconds(0.30f);
+
+                SwitchPlayerState(PlayerState.PLAYER_IDLE);
+
+                playerAnim.SetBool("Attack", false);
+
+                attackIndex++;
+
+            }
+            else if (attackIndex == 2)
+            {
+                playerAnim.SetBool("Attack_02", true);
+
+                yield return new WaitForSeconds(0.30f);
+
+                SwitchPlayerState(PlayerState.PLAYER_IDLE);
+
+                playerAnim.SetBool("Attack_02", false);
+
+                attackIndex++;
+
+            }
+            else if (attackIndex == 3)
+            {
+                playerAnim.SetBool("Attack_03", true);
+
+                yield return new WaitForSeconds(0.30f);
+
+                SwitchPlayerState(PlayerState.PLAYER_IDLE);
+
+                playerAnim.SetBool("Attack_03", false);
+
+                attackIndex = 1;
+
+            }
+        }
 
     }
 
@@ -254,7 +308,10 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.A))
         {
-            SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+            if (heavyAttacking == false)
+            {
+                SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+            }
         }
         else if(Input.GetKeyDown(KeyCode.S))
         {
