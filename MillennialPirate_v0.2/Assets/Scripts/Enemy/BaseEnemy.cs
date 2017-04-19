@@ -55,8 +55,8 @@ public class BaseEnemy : MonoBehaviour
         switch (CurrentState)
         {
             case EnemyState1.ENEMY_WALKING:
-                enemy_Anim.SetBool("Melee_Enemy_Attack", false);
-                enemy_Anim.SetBool("Melee_Enemy_Idle", false);
+                enemy_Anim.SetBool("attackTrigger", false);
+                enemy_Anim.SetBool("isIdle", false);
                 StopAllCoroutines();
 
                 break;
@@ -102,11 +102,11 @@ public class BaseEnemy : MonoBehaviour
 
     IEnumerator enemyAttacking ()
     {
-        enemy_Anim.SetBool("Melee_Enemy_Attack", true);
+        enemy_Anim.SetBool("attackTrigger", true);
 
         yield return new WaitForSeconds(0.25f);
 
-        enemy_Anim.SetBool("Melee_Enemy_Attack", false);
+        enemy_Anim.SetBool("attackTrigger", false);
 
         StartCoroutine(enemyIdling());
 
@@ -114,7 +114,7 @@ public class BaseEnemy : MonoBehaviour
 
     IEnumerator enemyIdling ()
     {
-        enemy_Anim.SetBool("Melee_Enemy_Idle", true);
+        enemy_Anim.SetBool("isIdle", true);
 
         yield return new WaitForSeconds(1.5f);
 
