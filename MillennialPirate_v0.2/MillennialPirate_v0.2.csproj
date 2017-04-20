@@ -104,10 +104,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\App\App.cs" />
     <Compile Include="Assets\Scripts\Boot\BootInit.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Arrow.cs" />
     <Compile Include="Assets\Scripts\Enemy\BaseEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy_State_Ctrl.cs" />
+    <Compile Include="Assets\Scripts\Enemy\HitVFX.cs" />
+    <Compile Include="Assets\Scripts\Enemy\RangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
-    <Compile Include="Assets\Scripts\Levels\Level01Set.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level0.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAttackBox.cs" />
