@@ -20,7 +20,7 @@ public class Level0 : MonoBehaviour
         eSpawn1 = GameObject.Find("EnemySpawn1").transform;
         eSpawn2 = GameObject.Find("EnemySpawn2").transform;
 
-        enemy = Resources.Load("Prefab/Enemy/RangeEnemy") as GameObject;
+        enemy = ResourceManager.Create("Prefab/Enemy/Melee_Enemy");
     }
 	
 	// Update is called once per frame

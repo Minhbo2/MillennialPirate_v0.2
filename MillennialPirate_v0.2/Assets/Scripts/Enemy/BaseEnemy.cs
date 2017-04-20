@@ -16,9 +16,11 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField]
     protected float
     m_health = 5,
-    m_speed = 5;
+    m_speed = 1.5f;
 
-    private Vector2 playerTrans;
+    [SerializeField] private Transform rootTransform;
+
+    private Vector3 playerTrans;
 
     private Animator enemy_Anim;
 
@@ -49,28 +51,34 @@ public class BaseEnemy : MonoBehaviour
         if (inRange == false)
         {
            
-           transform.position = Vector2.MoveTowards(this.transform.position, playerTrans, 1.5f * Time.deltaTime);
+           transform.position += (playerTrans - rootTransform.position).normalized * m_speed * Time.deltaTime;
+          
         }
 
         switch (CurrentState)
         {
             case EnemyState1.ENEMY_WALKING:
-                enemy_Anim.SetBool("attackTrigger", false);
-                enemy_Anim.SetBool("isIdle", false);
-                StopAllCoroutines();
-
+         
                 break;
 
             case EnemyState1.ENEMY_IDLE:
+                enemy_Anim.SetBool("isIdle", true);
                 break;
 
             case EnemyState1.ENEMY_ATTACK:
+                enemy_Anim.SetBool("attackTrigger", true);
                 break;
 
             case EnemyState1.ENEMY_DEATH:
+                enemy_Anim.SetBool("hasBeenKilled", true);
                 break;              
 
+        }
 
+        if (m_health <= 0)
+        {
+            CurrentState = EnemyState1.ENEMY_DEATH;
+            Destroy(gameObject);
         }
 	}
     
@@ -79,57 +87,32 @@ public class BaseEnemy : MonoBehaviour
         if(collision.tag == "Player")
         {
             inRange = true;
-            StartCoroutine(enemyAttacking());
-            
+            CurrentState = EnemyState1.ENEMY_ATTACK;
         }
+
+        else
+        {
+            CurrentState = EnemyState1.ENEMY_IDLE;
+
+        }
+
+
+        //if(collision.tag == "LightAttack")
+        //{
+           //m_health -= 1;
+        //}
+
+        //else (collision.tag == "HeavyAttack")
+        //{
+           //m_health -= 3;
+        //}
 
     }
 
     void EnemyStateChange (EnemyState1 stateChange)
     {
         CurrentState = stateChange;
-    }
-
-    public void _Attack()
-    {
-        EnemyStateChange(EnemyState1.ENEMY_ATTACK);
-    }
-
-    public void _Idle()
-    {
-        EnemyStateChange(EnemyState1.ENEMY_IDLE);
-    }
-
-    IEnumerator enemyAttacking ()
-    {
-        enemy_Anim.SetBool("attackTrigger", true);
-
-        yield return new WaitForSeconds(0.25f);
-
-        enemy_Anim.SetBool("attackTrigger", false);
-
-        StartCoroutine(enemyIdling());
-
-    }
-
-    IEnumerator enemyIdling ()
-    {
-        enemy_Anim.SetBool("isIdle", true);
-
-        yield return new WaitForSeconds(1.5f);
-
-        if (inRange = true)
-        {
-            StartCoroutine(enemyAttacking());
-        }
-
-        else
-        {
-
-        }
-          
-    }
-    
+    }   
 
     
 }
