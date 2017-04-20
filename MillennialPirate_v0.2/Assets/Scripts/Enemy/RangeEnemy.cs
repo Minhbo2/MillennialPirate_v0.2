@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class RangeEnemy : MonoBehaviour {
 
-    private enum RangeEnemyState { walk, attack, idle, die, getHit }
-    [SerializeField]
-    private RangeEnemyState r_Enemy     = RangeEnemyState.idle;
+    private enum RangeEnemyState { spawn, walk, attack, idle, die, getHit }
+    private RangeEnemyState r_Enemy     = RangeEnemyState.spawn;
 
     private int             health      = 10;
     private float           speed       = 1.5f;
@@ -18,12 +17,16 @@ public class RangeEnemy : MonoBehaviour {
     private GameObject      arrowPrefab;
     [SerializeField]
     private SpriteRenderer  enemySpriteRenderer;
-    public  bool            getHit      = false;
-    public  bool            isIdle      = false;
-    public  bool            isAttacking = false;
-    public  bool            isWalking   = false;
 
+    [SerializeField] private float startDelayTime;
+    private float startDelayTimer;
 
+    [SerializeField] private float attackDelayTime;
+    private float attackDelayTimer;
+
+    public float healthbarYOffset = 5.0f;
+    private GameObject healthBarGO;
+    private EnemyHealthBar healthBar;
 
     private void Awake()
     {
@@ -35,7 +38,11 @@ public class RangeEnemy : MonoBehaviour {
     private void Start()
     {
         Flip();
-        ChangeCurrentState(RangeEnemyState.idle);
+        healthBarGO = ResourceManager.Create("UI Sprite/HUD/EnemyHealthBar");
+        if (healthBarGO)
+            healthBar = healthBarGO.GetComponent<EnemyHealthBar>();
+
+        healthBarGO.transform.SetParent(LevelManager.HudSet.HealthBarsAnchor.transform, false);
     }
 
 
@@ -46,52 +53,51 @@ public class RangeEnemy : MonoBehaviour {
     {
         switch (r_Enemy)
         {
-            case RangeEnemyState.idle:
-                if (getHit)
-                    ChangeCurrentState(RangeEnemyState.getHit);
-                else if (health <= 0)
-                    ChangeCurrentState(RangeEnemyState.die);
-                else if (isWalking)
+            case RangeEnemyState.spawn:
+                startDelayTimer += Time.deltaTime;
+
+                if (startDelayTimer > startDelayTime)
                     ChangeCurrentState(RangeEnemyState.walk);
-                else if (isAttacking)
-                    ChangeCurrentState(RangeEnemyState.attack);
+
+                break;
+            case RangeEnemyState.idle:
+
                 break;
             case RangeEnemyState.walk:
-                if (getHit)
-                    ChangeCurrentState(RangeEnemyState.getHit);
-                else if (isIdle)
-                    ChangeCurrentState(RangeEnemyState.idle);
-                else if (health <= 0)
-                    ChangeCurrentState(RangeEnemyState.die);
-                else if (isAttacking)
+                attackDelayTimer += Time.deltaTime;
+
+                if (attackDelayTimer > attackDelayTime)
+                {
                     ChangeCurrentState(RangeEnemyState.attack);
+                    attackDelayTimer = 0;
+                }
                 break;
             case RangeEnemyState.attack:
-                if (getHit)
-                    ChangeCurrentState(RangeEnemyState.getHit);
-                else if (isIdle)
-                    ChangeCurrentState(RangeEnemyState.idle);
-                else if (health <= 0)
-                    ChangeCurrentState(RangeEnemyState.die);
-                else if (isWalking)
-                    ChangeCurrentState(RangeEnemyState.walk);
+                // Wait for attack animation to be complete
                 break;
             case RangeEnemyState.getHit:
-                if (isIdle)
-                    ChangeCurrentState(RangeEnemyState.idle);
-                else if (health <= 0)
-                    ChangeCurrentState(RangeEnemyState.die);
-                else if (isWalking)
-                    ChangeCurrentState(RangeEnemyState.walk);
-                else if (isAttacking)
-                    ChangeCurrentState(RangeEnemyState.attack);
+
+                break;
+            case RangeEnemyState.die:
+
                 break;
         }
+
+        // Transform the position of the enemy to set the position in the HUD
+        SetHealthBarPosition();
+    }
+
+    private void SetHealthBarPosition()
+    {
+        Vector3 transformedPosition = Game.Inst.WorldCamera.WorldToScreenPoint(gameObject.transform.position);
+        healthBarGO.transform.position = new Vector3(transformedPosition.x, transformedPosition.y + healthbarYOffset, transformedPosition.z);
     }
 
 
-
-
+    public void OnAttackCompleteAnimEvent()
+    {
+        ChangeCurrentState(RangeEnemyState.walk);
+    }
 
 
     private void ChangeCurrentState(RangeEnemyState newState)
@@ -102,18 +108,13 @@ public class RangeEnemy : MonoBehaviour {
         enemyAnim.SetBool("Attack", false);
         enemyAnim.SetBool("Walk", false);
         enemyAnim.SetBool("Die", false);
-
-        getHit      = false;
-        isIdle      = false;
-        isAttacking = false;
-        isWalking   = false;
+        enemyAnim.SetBool("GetHit", false);
 
         StopAllCoroutines();
 
         if (newState == RangeEnemyState.idle)
         {
             enemyAnim.SetBool("Idle", true);
-            isWalking = true;
         }
         else if (newState == RangeEnemyState.walk)
         {
@@ -130,8 +131,7 @@ public class RangeEnemy : MonoBehaviour {
         }
         else if (newState == RangeEnemyState.getHit)
         {
-            enemyAnim.SetBool("Get Hit", true);
-            isIdle = true;
+            enemyAnim.SetBool("GetHit", true);
         }
     }
 
@@ -194,8 +194,6 @@ public class RangeEnemy : MonoBehaviour {
             transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
             yield return DistanceToTarget(target);
         }
-        isWalking   = false;
-        isAttacking = true;
     }
 
 
@@ -206,7 +204,5 @@ public class RangeEnemy : MonoBehaviour {
     {
         arrowPrefab = ResourceManager.Create("Prefab/Enemy/Arrow");
         arrowPrefab.transform.position = arrowAnchor.position;
-        isWalking   = true;
-        isAttacking = false;
     }
 }

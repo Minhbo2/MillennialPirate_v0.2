@@ -18,6 +18,9 @@ public class Game : MonoBehaviour
     public static Game Inst { get { return m_Inst; } }
     static Game m_Inst;
 
+    // The world camera
+    public Camera WorldCamera;
+
     // Set the initial game state to initializing
     private GameState CurrentState = GameState.GAME_INITIALIZING;
 

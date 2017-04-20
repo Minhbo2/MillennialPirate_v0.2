@@ -45,6 +45,7 @@ public class Arrow : MonoBehaviour {
     private void Flip()
     {
         float playerXPos = player.transform.position.x;
+
         if (playerXPos > transform.position.x)
             transform.GetComponent<SpriteRenderer>().flipX = true;
     }
