@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
         playerLightAttack = Resources.Load("Animations/Player/Player_Attack_Light") as Animation;
         playerHeavyAttack = Resources.Load("Animations/Player/Player_Attack_Heavy") as Animation;
 
-        player.GetComponent<SpriteRenderer>().flipX = true;
+        //player.GetComponent<SpriteRenderer>().flipX = true;
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         lightAttackSound = Resources.Load("Sounds/Player_Light_Attack") as AudioClip;
         heavyAttackSound = Resources.Load("Sounds/Player_Heavy_Attack") as AudioClip;
@@ -138,7 +139,8 @@ public class Player : MonoBehaviour
         if(heavyAttacking == false)
         {
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
-            player.GetComponent<SpriteRenderer>().flipX = true;
+            //player.GetComponent<SpriteRenderer>().flipX = true;
+            player.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
 
@@ -149,7 +151,8 @@ public class Player : MonoBehaviour
         if (heavyAttacking == false)
         {
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
-            player.GetComponent<SpriteRenderer>().flipX = false;
+            //player.GetComponent<SpriteRenderer>().flipX = false;
+            player.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }
@@ -291,7 +294,8 @@ public class Player : MonoBehaviour
             if (heavyAttacking == false)
             {
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
-                player.GetComponent<SpriteRenderer>().flipX = false;
+                player.transform.rotation = Quaternion.Euler(0, 0, 0);
+                //player.GetComponent<SpriteRenderer>().flipX = false;
             }
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow))
@@ -299,7 +303,8 @@ public class Player : MonoBehaviour
             if (heavyAttacking == false)
             {
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
-                player.GetComponent<SpriteRenderer>().flipX = true;
+                //player.GetComponent<SpriteRenderer>().flipX = true;
+                player.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow))
