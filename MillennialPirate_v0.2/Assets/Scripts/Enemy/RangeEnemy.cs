@@ -24,9 +24,9 @@ public class RangeEnemy : MonoBehaviour {
     [SerializeField] private float attackDelayTime;
     private float attackDelayTimer;
 
-    public float healthbarYOffset = 5.0f;
-    private GameObject healthBarGO;
-    private EnemyHealthBar healthBar;
+    public  float           healthbarYOffset = 5.0f;
+    private GameObject      healthBarGO;
+
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class RangeEnemy : MonoBehaviour {
         Flip();
         healthBarGO = ResourceManager.Create("UI Sprite/HUD/EnemyHealthBar");
         if (healthBarGO)
-            healthBar = healthBarGO.GetComponent<EnemyHealthBar>();
+            healthBarGO.GetComponent<EnemyHealthBar>().inst_RangeEnemy = gameObject;
 
         healthBarGO.transform.SetParent(LevelManager.HudSet.HealthBarsAnchor.transform, false);
     }
@@ -87,6 +87,8 @@ public class RangeEnemy : MonoBehaviour {
         SetHealthBarPosition();
     }
 
+
+
     private void SetHealthBarPosition()
     {
         Vector3 transformedPosition = Game.Inst.WorldCamera.WorldToScreenPoint(gameObject.transform.position);
@@ -94,10 +96,14 @@ public class RangeEnemy : MonoBehaviour {
     }
 
 
+
+
     public void OnAttackCompleteAnimEvent()
     {
         ChangeCurrentState(RangeEnemyState.walk);
     }
+
+
 
 
     private void ChangeCurrentState(RangeEnemyState newState)
@@ -199,10 +205,9 @@ public class RangeEnemy : MonoBehaviour {
 
 
 
-
     public void SpawnArrow()
     {
-        arrowPrefab = ResourceManager.Create("Prefab/Enemy/Arrow");
+        arrowPrefab = ResourceManager.Create("Prefab/Misc/Arrow");
         arrowPrefab.transform.position = arrowAnchor.position;
     }
 }
