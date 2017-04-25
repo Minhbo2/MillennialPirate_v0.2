@@ -7,6 +7,7 @@ public enum EnemyState1
     ENEMY_ATTACK,
     ENEMY_WALKING,
     ENEMY_DEATH,
+    ENEMY_HIT,
     ENEMY_IDLE
 }
 
@@ -18,7 +19,9 @@ public class BaseEnemy : MonoBehaviour
     m_health = 5,
     m_speed = 1.5f;
 
-    [SerializeField] private Transform rootTransform;
+    [SerializeField]
+    private Transform rootTransform;
+    private Transform findPlayer = null;
 
     private Vector3 playerTrans;
 
@@ -31,7 +34,13 @@ public class BaseEnemy : MonoBehaviour
     private Animation enemy_Idle;
 
     private bool inRange = false;
+    private GameObject melee_enemy;
 
+
+    private void Awake()
+    {
+        findPlayer = GameObject.Find("Player").GetComponent<Transform>();
+    }
 
     void Start ()
     {
@@ -40,6 +49,7 @@ public class BaseEnemy : MonoBehaviour
         playerTrans = GameObject.Find("Player").transform.position;
 
         enemy_Attacking = Resources.Load("Animations/EnemyAni/Melee_Enemy_Attack") as Animation;
+        ChangeDirection();
 
     }
 
@@ -69,6 +79,10 @@ public class BaseEnemy : MonoBehaviour
                 enemy_Anim.SetBool("attackTrigger", true);
                 break;
 
+            case EnemyState1.ENEMY_HIT:
+
+                break;
+
             case EnemyState1.ENEMY_DEATH:
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;              
@@ -81,7 +95,9 @@ public class BaseEnemy : MonoBehaviour
             Destroy(gameObject);
         }
 	}
-    
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
@@ -90,10 +106,16 @@ public class BaseEnemy : MonoBehaviour
             CurrentState = EnemyState1.ENEMY_ATTACK;
         }
 
+        if(collision.tag == "PlayerAttack")
+        {
+            CurrentState = EnemyState1.ENEMY_HIT;
+            StartCoroutine(enemyIsIdling());
+        }
+
         else
         {
-            CurrentState = EnemyState1.ENEMY_IDLE;
-
+           CurrentState = EnemyState1.ENEMY_IDLE;
+           
         }
 
 
@@ -112,7 +134,37 @@ public class BaseEnemy : MonoBehaviour
     void EnemyStateChange (EnemyState1 stateChange)
     {
         CurrentState = stateChange;
-    }   
+    }
 
-    
+    //IEnumerator enemyIsIdling()
+    //{
+        //CurrentState = EnemyState1.ENEMY_IDLE;
+
+        //yield return new WaitForSeconds(0.5f);
+
+        //if (inRange = true)
+        //{
+            //CurrentState = EnemyState1.ENEMY_ATTACK;
+        //}
+    //}
+
+    private void ChangeDirection()
+    {
+        if (findPlayer)
+        {
+            float playerXPos = findPlayer.position.x;
+            float transformXPos = transform.position.x;
+            float yRot = transform.eulerAngles.y;
+
+            if (transformXPos < playerXPos)
+            {
+                if (yRot == 0)
+                {
+                    yRot = 180;
+                    transform.eulerAngles = new Vector2(0, yRot);
+                }
+            }
+        }
+    }
+
 }
