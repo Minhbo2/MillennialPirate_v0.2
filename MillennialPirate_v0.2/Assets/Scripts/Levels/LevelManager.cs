@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : Set
-{
+{ /*
     public  static HUDSet           hudSet      = null;
     private GameObject              enemy;
     [SerializeField]
@@ -113,5 +113,5 @@ public class LevelManager : Set
             levelIndex++;
             HUDSet.Inst.EndGameCondition("Win");
         }
-    }
+    }*/
 }

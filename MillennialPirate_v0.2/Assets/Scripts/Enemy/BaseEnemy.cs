@@ -57,6 +57,7 @@ public class BaseEnemy : MonoBehaviour
 
 	void Update ()
     {
+        Debug.Log(CurrentState);
 
         if (inRange == false)
         {
@@ -72,11 +73,11 @@ public class BaseEnemy : MonoBehaviour
                 break;
 
             case EnemyState1.ENEMY_IDLE:
-                enemy_Anim.SetBool("isIdle", true);
+                StartCoroutine(IdleDelay());
                 break;
 
             case EnemyState1.ENEMY_ATTACK:
-                enemy_Anim.SetBool("attackTrigger", true);
+                StartCoroutine(AttackDelay());
                 break;
 
             case EnemyState1.ENEMY_HIT:
@@ -100,7 +101,7 @@ public class BaseEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if(collision.gameObject.tag == "Player")
         {
             inRange = true;
             CurrentState = EnemyState1.ENEMY_ATTACK;
@@ -114,7 +115,7 @@ public class BaseEnemy : MonoBehaviour
 
         else
         {
-           CurrentState = EnemyState1.ENEMY_IDLE;
+           //CurrentState = EnemyState1.ENEMY_IDLE;
            
         }
 
@@ -128,6 +129,30 @@ public class BaseEnemy : MonoBehaviour
         //{
            //m_health -= 3;
         //}
+
+    }
+
+    IEnumerator AttackDelay ()
+    {
+        enemy_Anim.SetBool("attackTrigger", true);
+
+        yield return new WaitForSeconds(1.20f);
+
+        enemy_Anim.SetBool("attackTrigger", false);
+
+        CurrentState = EnemyState1.ENEMY_IDLE;
+
+    }
+
+    IEnumerator IdleDelay ()
+    {
+        enemy_Anim.SetBool("isIdle", true);
+
+        yield return new WaitForSeconds(1.25f);
+
+        enemy_Anim.SetBool("isIdle", false);
+
+        CurrentState = EnemyState1.ENEMY_ATTACK;
 
     }
 

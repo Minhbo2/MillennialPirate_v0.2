@@ -18,7 +18,7 @@ public class PlayerAttackBox : MonoBehaviour {
 
     void OnTriggerEnter2D (Collider2D other)
     {
-        if (gc.GetComponent<Player>().heavyAttacking == false || gc.GetComponent<Player>().knockBacking == false)
+        if (gc.GetComponent<Player>().knockBacking == false)
         {
             if (other.gameObject.tag == "MeleeEnemy")
             {

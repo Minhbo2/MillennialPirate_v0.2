@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\UI\SetManager.cs" />
     <Compile Include="Assets\Scripts\Utility\Data.cs" />
     <Compile Include="Assets\Scripts\Utility\DataUtility.cs" />
+    <Compile Include="Assets\Scripts\Utility\NextBackButton.cs" />
     <Compile Include="Assets\Scripts\Utility\ResourceManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

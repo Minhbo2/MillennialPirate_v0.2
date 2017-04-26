@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\UI\SetManager.cs" />
      <Compile Include="Assets\Scripts\Utility\Data.cs" />
      <Compile Include="Assets\Scripts\Utility\DataUtility.cs" />
+     <Compile Include="Assets\Scripts\Utility\NextBackButton.cs" />
      <Compile Include="Assets\Scripts\Utility\ResourceManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -247,7 +247,6 @@ public class Player : MonoBehaviour
 
     void KnockBackCooldown ()
     {
-        Debug.Log(knockBackReady);
 
         if(knockBackReady == false)
         {

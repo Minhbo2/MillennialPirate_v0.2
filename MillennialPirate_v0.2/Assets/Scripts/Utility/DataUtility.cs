@@ -15,7 +15,7 @@ public class DataUtility : MonoBehaviour {
             file.Close();
 
             LevelSelectionSet.levelCompleted = loadedData.levelCompleted;
-            LevelManager.levelIndex          = loadedData.levelCompleted;
+         //   LevelManager.levelIndex          = loadedData.levelCompleted;
         }
     }
 
