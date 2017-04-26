@@ -5,4 +5,9 @@ using UnityEngine;
 public class HUDSet : Set {
 
     [SerializeField] public GameObject HealthBarsAnchor;
+
+    private void Start()
+    {
+
+    } 
 }

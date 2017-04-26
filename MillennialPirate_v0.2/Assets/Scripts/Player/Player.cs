@@ -12,7 +12,8 @@ public enum PlayerState
     PLAYER_ATTACK_HEAVY,
     PLAYER_DODGE,
     PLAYER_HIT,
-    PLAYER_DEAD
+    PLAYER_DEAD,
+    PLAYER_KNOCKBACK
 }
 
 public class Player : MonoBehaviour
@@ -27,7 +28,8 @@ public class Player : MonoBehaviour
     private Animation playerHeavyAttack;
     private Animation playerDodge;
 
-    private bool heavyAttacking = false;
+    public bool heavyAttacking = false;
+    public bool knockBacking = false;
 
     private AudioSource playerAudioSource;
 
@@ -38,7 +40,15 @@ public class Player : MonoBehaviour
 
     public bool isDodging = false;
 
+    private bool isHoldingLeft = false;
+    private bool isHoldingRight = false;
+
     public int attackIndex = 1;
+
+    private bool knockBackReady = false;
+
+    private float knockBackTimer = 5.0f;
+    private float knockBackTemp = 0.0f;
 
     private void Start()
     {
@@ -121,11 +131,20 @@ public class Player : MonoBehaviour
             case PlayerState.PLAYER_DEAD:
                 break;
 
+            case PlayerState.PLAYER_KNOCKBACK:
+
+                StartCoroutine(KnockBackDuration());
+                knockBackReady = false;
+
+                break;
+
         }
 
         CheckState();
 
         KeyControls();
+
+        KnockBackCooldown();
 
     }
 
@@ -136,11 +155,10 @@ public class Player : MonoBehaviour
 
     public void _LookRight()
     {
-        if(heavyAttacking == false)
+        if(heavyAttacking == false || knockBacking == false)
         {
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
             //player.GetComponent<SpriteRenderer>().flipX = true;
-            player.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
 
@@ -148,11 +166,10 @@ public class Player : MonoBehaviour
 
     public void _LookLeft()
     {
-        if (heavyAttacking == false)
+        if (heavyAttacking == false || knockBacking == false)
         {
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
             //player.GetComponent<SpriteRenderer>().flipX = false;
-            player.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }
@@ -166,18 +183,85 @@ public class Player : MonoBehaviour
     public void _LightAttack ()
     {
         //Player light attack
-        SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
-        playerAudioSource.clip = lightAttackSound;
+        if (heavyAttacking == false || knockBacking == false)
+        {
+            if (isHoldingLeft == true || isHoldingRight == true)
+            {
+                if (knockBackReady == true)
+                {
+                    //knockback
+                    Debug.Log("knockbacks");
+                    SwitchPlayerState(PlayerState.PLAYER_KNOCKBACK);
+                }
+                else if (knockBackReady == false)
+                {
+                    SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+                    playerAudioSource.clip = lightAttackSound;
+                }
+            }
+
+            else if (isHoldingLeft == false || isHoldingRight == false)
+            {
+
+                SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+                playerAudioSource.clip = lightAttackSound;
+            }
+        }
+
     }
 
-    
+
 
     public void _HeavyAttack ()
     {
         //Player heavy attack
         SwitchPlayerState(PlayerState.PLAYER_ATTACK_HEAVY);
         playerAudioSource.clip = heavyAttackSound;
+
     }
+
+
+    public void _LeftButtonDown ()
+    {
+        isHoldingLeft = true;
+        Debug.Log("holding L");
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    public void _RightButtonDown ()
+    {
+        isHoldingRight = true;
+        Debug.Log("holding R");
+        player.transform.rotation = Quaternion.Euler(0, 180, 0);
+    }
+
+    public void _LeftButtonUp ()
+    {
+        isHoldingLeft = false;
+    }
+
+    public void _RightButtonUp()
+    {
+        isHoldingRight = false;
+    }
+
+    void KnockBackCooldown ()
+    {
+        Debug.Log(knockBackReady);
+
+        if(knockBackReady == false)
+        {
+
+            knockBackTemp += Time.deltaTime;
+
+            if(knockBackTemp >= knockBackTimer)
+            {
+                knockBackReady = true;
+                knockBackTemp = 0;
+            }
+        }
+    }
+
 
     IEnumerator LightAttackDuration ()
     {
@@ -279,19 +363,34 @@ public class Player : MonoBehaviour
 
         playerAnim.SetBool("Dodge", true);
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.44f);
 
         isDodging = false;
 
         SwitchPlayerState(PlayerState.PLAYER_IDLE);
     }
 
+    IEnumerator KnockBackDuration()
+    {
+        playerAnim.SetBool("KnockBack", true);
+        knockBacking = true;
+
+        yield return new WaitForSeconds(0.38f);
+
+        playerAnim.SetBool("KnockBack", false);
+        knockBacking = false;
+
+        SwitchPlayerState(PlayerState.PLAYER_IDLE);
+    }
+
+    
+
 
     private void KeyControls ()
     {
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (heavyAttacking == false)
+            if (heavyAttacking == false || knockBacking == false)
             {
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
                 player.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -300,7 +399,7 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (heavyAttacking == false)
+            if (heavyAttacking == false || knockBacking == false)
             {
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
                 //player.GetComponent<SpriteRenderer>().flipX = true;
@@ -313,9 +412,29 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.A))
         {
-            if (heavyAttacking == false)
+            if (heavyAttacking == false || knockBacking == false)
             {
-                SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+                if (isHoldingLeft == true || isHoldingRight == true)
+                {
+                    if (knockBackReady == true)
+                    {
+                        //knockback
+                        Debug.Log("knockbacks");
+                        SwitchPlayerState(PlayerState.PLAYER_KNOCKBACK);
+                    }
+                    else if (knockBackReady == false)
+                    {
+                        SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+                        playerAudioSource.clip = lightAttackSound;
+                    }
+                }
+
+                else if (isHoldingLeft == false || isHoldingRight == false)
+                {
+
+                    SwitchPlayerState(PlayerState.PLAYER_ATTACK_LIGHT);
+                    playerAudioSource.clip = lightAttackSound;
+                }
             }
         }
         else if(Input.GetKeyDown(KeyCode.S))

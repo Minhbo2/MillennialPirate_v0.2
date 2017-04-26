@@ -109,7 +109,7 @@ public class BaseEnemy : MonoBehaviour
         if(collision.tag == "PlayerAttack")
         {
             CurrentState = EnemyState1.ENEMY_HIT;
-            StartCoroutine(enemyIsIdling());
+            //StartCoroutine(enemyIsIdling());
         }
 
         else
