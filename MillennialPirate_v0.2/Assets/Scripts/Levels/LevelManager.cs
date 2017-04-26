@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class LevelManager : Set
 {
-
-    public static HUDSet            HudSet;
+    public  static HUDSet           hudSet      = null;
     private GameObject              enemy;
     [SerializeField]
     private List<GameObject>        enemyList   = new List<GameObject>();
     private static GameObject       level       = null;
     private bool                    canSpawn    = true;
     public  static int              levelIndex  = 0;
+    private float                   levelTimer  = 60;
+    private float                   currentTime = 0;
+    private float                   time;
 
 
     private void Start()
     {
-        LoadLevel(levelIndex);
         FillingEnemyList();
+        LoadLevel(levelIndex);
     }
 
 
@@ -25,6 +27,7 @@ public class LevelManager : Set
     private void Update()
     {
         StartCoroutine(SpawnEnemy());
+        LevelTime();
     }
 
 
@@ -33,7 +36,7 @@ public class LevelManager : Set
     public static void LoadLevel(int index)
     {
         level   = ResourceManager.Create("Prefab/Level/Level" + index);
-        HudSet  = SetManager.OpenSet<HUDSet>();
+        hudSet  = SetManager.OpenSet<HUDSet>();
     }
 
 
@@ -44,7 +47,7 @@ public class LevelManager : Set
         if (canSpawn == true)
         {
             canSpawn        = false;
-            float ranTime   = Random.Range(2.0f, 5.0f);
+            float ranTime   = Random.Range(3.0f, 5.0f);
             yield return new WaitForSeconds(ranTime);
 
             enemy           = enemyList[Random.Range(0, enemyList.Count)];
@@ -90,6 +93,25 @@ public class LevelManager : Set
                 enemyList.Add(enemyObj);
 
             counter++;
+        }
+    }
+
+
+
+
+    private void LevelTime()
+    {
+        if (currentTime < levelTimer) 
+        {
+            currentTime += Time.deltaTime;
+            time = currentTime / levelTimer;
+            HUDSet.Inst.progressText.text = currentTime.ToString() + "/60";
+            HUDSet.Inst.progressBar.fillAmount = time;
+        }
+        else if (currentTime >= levelTimer) //and  player health is greater than 0
+        {
+            levelIndex++;
+            HUDSet.Inst.EndGameCondition("Win");
         }
     }
 }

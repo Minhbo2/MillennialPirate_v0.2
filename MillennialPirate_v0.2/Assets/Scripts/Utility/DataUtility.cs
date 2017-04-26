@@ -15,17 +15,17 @@ public class DataUtility : MonoBehaviour {
             file.Close();
 
             LevelSelectionSet.levelCompleted = loadedData.levelCompleted;
-            LevelManager.levelIndex = loadedData.levelCompleted;
+            LevelManager.levelIndex          = loadedData.levelCompleted;
         }
     }
 
     public static void SaveData()
     {
         Data newData = new Data();
-        newData.levelCompleted = LevelSelectionSet.levelCompleted;
+        newData.levelCompleted  = LevelSelectionSet.levelCompleted;
 
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/score.dat");
+        BinaryFormatter bf      = new BinaryFormatter();
+        FileStream file         = File.Create(Application.persistentDataPath + "/score.dat");
         bf.Serialize(file, newData);
         file.Close();
     }

@@ -42,7 +42,7 @@ public class RangeEnemy : MonoBehaviour {
         if (healthBarGO)
             healthBarGO.GetComponent<EnemyHealthBar>().inst_RangeEnemy = gameObject;
 
-        healthBarGO.transform.SetParent(LevelManager.HudSet.HealthBarsAnchor.transform, false);
+        healthBarGO.transform.SetParent(LevelManager.hudSet.HealthBarsAnchor.transform, false);
     }
 
 
