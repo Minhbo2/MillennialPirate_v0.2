@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerAttackBox : MonoBehaviour {
 
+    GameObject gc;
+
 	// Use this for initialization
 	void Start () {
-		
+        gc = GameObject.Find("GameController");
 	}
 	
 	// Update is called once per frame
@@ -16,9 +18,17 @@ public class PlayerAttackBox : MonoBehaviour {
 
     void OnTriggerEnter2D (Collider2D other)
     {
-        if (other.gameObject.tag == "MeleeEnemy")
+        if (gc.GetComponent<Player>().heavyAttacking == false || gc.GetComponent<Player>().knockBacking == false)
         {
-            Destroy(other.gameObject);
+            if (other.gameObject.tag == "MeleeEnemy")
+            {
+                Destroy(other.gameObject);
+            }
+
+            if (other.gameObject.tag == "RangeEnemy")
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }
