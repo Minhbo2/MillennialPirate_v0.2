@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using System;
 
@@ -22,7 +21,7 @@ public class Game : MonoBehaviour
     public Camera WorldCamera;
 
     // Set the initial game state to initializing
-    private GameState CurrentState = GameState.GAME_INITIALIZING;
+    public GameState CurrentState = GameState.GAME_INITIALIZING;
 
     // Variables used for state transitions
     [NonSerialized]
@@ -53,7 +52,7 @@ public class Game : MonoBehaviour
                 // play splash screen 
                 // loading data if any
 
-                SetManager.OpenSet<LevelSelectionSet>((mms) => WantsToBeInWaitState = true);
+                SetManager.OpenSet<LevelSelectionSet>((lss) => WantsToBeInWaitState = true);
 
                 // If we want to be in the wait state, do the state transition
                 if (WantsToBeInWaitState)
@@ -70,7 +69,8 @@ public class Game : MonoBehaviour
                 break;
             case GameState.GAME_LOADING:
                 // TODO: Load the level
-                SetManager.OpenSet<LevelManager>((mms) => WantsToBeInRunningState = true);
+                SetManager.OpenSet<LevelManager>((lm) => WantsToBeInRunningState = true);
+                DataUtility.LoadData();
 
                 // If we want to be in the running state, do the state transition
                 if (WantsToBeInRunningState)
