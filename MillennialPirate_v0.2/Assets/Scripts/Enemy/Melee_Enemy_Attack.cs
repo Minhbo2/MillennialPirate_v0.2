@@ -24,5 +24,6 @@ public class Melee_Enemy_Attack : MonoBehaviour
             if (!Player.isDodging)
                 PlayerHealth.currentHealth--;
         }
-    } 
+    }
+ 
 }
