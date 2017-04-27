@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class HUDSet : Set {
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> be533233285d8df6b6a44e06c9e593cedf862325
     public static HUDSet Inst {
         get { return m_inst; }
     } static HUDSet m_inst;
