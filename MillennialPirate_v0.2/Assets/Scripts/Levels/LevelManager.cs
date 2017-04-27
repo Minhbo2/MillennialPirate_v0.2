@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class LevelManager : Set
 { 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 87a0ec749f6b9b6d7a411ed1de45fb50eddddc1e
-    public  static HUDSet           hudSet      = null;
-=======
->>>>>>> be533233285d8df6b6a44e06c9e593cedf862325
->>>>>>> 973f77a2e56350d065316fb0b211c912f2b47475
     private GameObject              enemy;
     [SerializeField]
     private List<GameObject>        enemyList   = new List<GameObject>();
