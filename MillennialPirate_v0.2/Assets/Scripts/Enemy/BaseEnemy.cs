@@ -129,6 +129,8 @@ public class BaseEnemy : MonoBehaviour
     {
         enemy_Anim.SetBool("attackTrigger", true);
 
+
+
         yield return new WaitForSeconds(1.20f);
 
         enemy_Anim.SetBool("attackTrigger", false);
