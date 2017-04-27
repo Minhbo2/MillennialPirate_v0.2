@@ -100,7 +100,7 @@ public class LevelManager : Set
 
     private void LevelTime()
     {
-        if (currentTime < levelTimer) 
+        if (currentTime < levelTimer)
         {
             currentTime += Time.deltaTime;
             time = currentTime / levelTimer;
@@ -109,8 +109,11 @@ public class LevelManager : Set
         }
         else if (currentTime >= levelTimer) //and  player health is greater than 0
         {
-            levelIndex++;
-            HUDSet.Inst.EndGameCondition("Win");
+            if (!HUDSet.Inst.winScreen.activeInHierarchy)
+            {
+                //levelIndex++;
+                HUDSet.Inst.EndGameCondition("Win");
+            }
         }
     }
 }
