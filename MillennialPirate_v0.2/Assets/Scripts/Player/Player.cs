@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
                 playerAnim.SetBool("Attack_03", false);
                 playerAnim.SetBool("HeavyAttack", false);
                 playerAnim.SetBool("Dodge", false);
+                playerAnim.SetBool("KnockBack", false);
                 isSoundPlaying = false;
                 StopAllCoroutines();
 
@@ -134,7 +135,6 @@ public class Player : MonoBehaviour
             case PlayerState.PLAYER_KNOCKBACK:
 
                 StartCoroutine(KnockBackDuration());
-                knockBackReady = false;
 
                 break;
 
@@ -237,11 +237,13 @@ public class Player : MonoBehaviour
 
     public void _LeftButtonUp ()
     {
+
         isHoldingLeft = false;
     }
 
     public void _RightButtonUp()
     {
+
         isHoldingRight = false;
     }
 
@@ -371,8 +373,10 @@ public class Player : MonoBehaviour
 
     IEnumerator KnockBackDuration()
     {
-        playerAnim.SetBool("KnockBack", true);
+        knockBackReady = false;
+
         knockBacking = true;
+        playerAnim.SetBool("KnockBack", true);
 
         yield return new WaitForSeconds(0.38f);
 
