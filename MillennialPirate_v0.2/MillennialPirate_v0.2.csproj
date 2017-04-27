@@ -108,6 +108,7 @@
     <Compile Include="Assets\Scripts\Enemy\BaseEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyHealthBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy_State_Ctrl.cs" />
+    <Compile Include="Assets\Scripts\Enemy\HeavyEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\HitVFX.cs" />
     <Compile Include="Assets\Scripts\Enemy\RangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
