@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : Set
-{ /*
-    public  static HUDSet           hudSet      = null;
+{ 
     private GameObject              enemy;
     [SerializeField]
     private List<GameObject>        enemyList   = new List<GameObject>();
@@ -36,7 +35,6 @@ public class LevelManager : Set
     public static void LoadLevel(int index)
     {
         level   = ResourceManager.Create("Prefab/Level/Level" + index);
-        hudSet  = SetManager.OpenSet<HUDSet>();
     }
 
 
@@ -113,5 +111,5 @@ public class LevelManager : Set
             levelIndex++;
             HUDSet.Inst.EndGameCondition("Win");
         }
-    }*/
+    }
 }
