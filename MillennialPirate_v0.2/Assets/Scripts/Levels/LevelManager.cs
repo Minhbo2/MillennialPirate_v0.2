@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LevelManager : Set
 { 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8688a40fff2b3494dce59c493151811db3cad21
     private GameObject              enemy;
     [SerializeField]
     private List<GameObject>        enemyList   = new List<GameObject>();
