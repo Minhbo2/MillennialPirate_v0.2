@@ -4,11 +4,16 @@ using UnityEngine;
 public class Level : MonoBehaviour {
 
     [SerializeField]
-    private GameObject[] spawnPos;
+    private         GameObject[]    spawnPos;
+    public static   GameObject      hudSet;
 
 
 
-
+    private void Start()
+    {
+        if (!hudSet)
+            hudSet = transform.FindChild("HUDSet").gameObject;
+    }
     /// <summary>
     /// getting a random location from the array
     /// remember to assign locations for every level prefab
