@@ -2,20 +2,7 @@
 using UnityEngine;
 
 public class HUDSet : Set {
-<<<<<<< HEAD
 
-
-=======
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-
-=======
->>>>>>> be533233285d8df6b6a44e06c9e593cedf862325
->>>>>>> 87a0ec749f6b9b6d7a411ed1de45fb50eddddc1e
->>>>>>> 973f77a2e56350d065316fb0b211c912f2b47475
     public static HUDSet Inst {
         get { return m_inst; }
     } static HUDSet m_inst;
@@ -81,8 +68,5 @@ public class HUDSet : Set {
 
         Pausing();
     }
-<<<<<<< HEAD
-//>>>>>>> 8d96d5c4789c647d889c9956a55bcb0f2af6094d
-=======
->>>>>>> 87a0ec749f6b9b6d7a411ed1de45fb50eddddc1e
+
 }
