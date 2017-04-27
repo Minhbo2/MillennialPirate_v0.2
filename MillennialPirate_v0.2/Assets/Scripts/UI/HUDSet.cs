@@ -2,15 +2,9 @@
 using UnityEngine;
 
 public class HUDSet : Set {
-/*
-<<<<<<< HEAD
-    [SerializeField] public GameObject HealthBarsAnchor;
 
-    private void Start()
-    {
 
-    } 
-=======
+
     public static HUDSet Inst {
         get { return m_inst; }
     } static HUDSet m_inst;
@@ -76,5 +70,4 @@ public class HUDSet : Set {
 
         Pausing();
     }
->>>>>>> 8d96d5c4789c647d889c9956a55bcb0f2af6094d*/
 }
