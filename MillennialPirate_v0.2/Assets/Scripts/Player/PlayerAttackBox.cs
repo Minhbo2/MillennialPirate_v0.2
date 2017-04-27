@@ -29,6 +29,11 @@ public class PlayerAttackBox : MonoBehaviour {
             {
                 Destroy(other.gameObject);
             }
+
+            if (other.gameObject.tag == "Arrow")
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }
