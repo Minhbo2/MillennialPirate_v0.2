@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
     private bool isSoundPlaying = false;
 
-    public bool isDodging = false;
+    public static bool isDodging = false;
 
     private bool isHoldingLeft = false;
     private bool isHoldingRight = false;
