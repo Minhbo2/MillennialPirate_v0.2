@@ -110,25 +110,18 @@ public class BaseEnemy : MonoBehaviour
         if(collision.tag == "PlayerAttack")
         {
             CurrentState = EnemyState1.ENEMY_HIT;
-            //StartCoroutine(enemyIsIdling());
         }
 
-        else
+
+        /*if(collision.tag == "LightAttack")
         {
-           //CurrentState = EnemyState1.ENEMY_IDLE;
-           
+           m_health -= 1;
         }
 
-
-        //if(collision.tag == "LightAttack")
-        //{
-           //m_health -= 1;
-        //}
-
-        //else (collision.tag == "HeavyAttack")
-        //{
-           //m_health -= 3;
-        //}
+        else (collision.tag == "HeavyAttack")
+        {
+           m_health -= 3;
+        }*/
 
     }
 
@@ -146,6 +139,8 @@ public class BaseEnemy : MonoBehaviour
 
     IEnumerator IdleDelay ()
     {
+
+        
         enemy_Anim.SetBool("isIdle", true);
 
         yield return new WaitForSeconds(1.25f);
@@ -161,17 +156,6 @@ public class BaseEnemy : MonoBehaviour
         CurrentState = stateChange;
     }
 
-    //IEnumerator enemyIsIdling()
-    //{
-        //CurrentState = EnemyState1.ENEMY_IDLE;
-
-        //yield return new WaitForSeconds(0.5f);
-
-        //if (inRange = true)
-        //{
-            //CurrentState = EnemyState1.ENEMY_ATTACK;
-        //}
-    //}
 
     private void ChangeDirection()
     {

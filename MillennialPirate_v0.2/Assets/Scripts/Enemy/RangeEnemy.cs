@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class RangeEnemy : MonoBehaviour {
-    /*
+    
     private enum RangeEnemyState { spawn, walk, attack, idle, die, getHit }
     private RangeEnemyState r_Enemy     = RangeEnemyState.spawn;
 
@@ -209,5 +209,5 @@ public class RangeEnemy : MonoBehaviour {
     {
         arrowPrefab = ResourceManager.Create("Prefab/Misc/Arrow");
         arrowPrefab.transform.position = arrowAnchor.position;
-    } */
+    } 
 }
