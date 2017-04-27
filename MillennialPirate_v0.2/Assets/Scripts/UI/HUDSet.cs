@@ -7,26 +7,20 @@ public class HUDSet : Set {
         get { return m_inst; }
     } static HUDSet m_inst;
 
-    [SerializeField] public GameObject  HealthBarsAnchor;
-    [SerializeField] public Image       progressBar;
-    [SerializeField] public Text        progressText;
-    [SerializeField] public GameObject  winScreen;
-    [SerializeField] public GameObject  loseScreen;
+    public GameObject   HealthBarsAnchor;
+    public Image        progressBar;
+    public Text         progressText;
+    public GameObject   winScreen;
+    public GameObject   loseScreen;
+    public GameObject   pauseScreen;
 
 
     private void Start()
     {
         if (m_inst == null)
             m_inst = this;
-    }
 
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            EndGameCondition("Win");
+        NextBackButton.SetNextBackBtnFunction(PausingInLevel);
     }
 
 
@@ -69,14 +63,28 @@ public class HUDSet : Set {
 
 
 
-    public void EndGameCondition(string condition)
+    public void GameCondition(string condition)
     {
-        if (condition == "Win")
-            winScreen.SetActive(true);
-        else if (condition == "Lose")
-            loseScreen.SetActive(true);
-
+        switch (condition)
+        {
+            case "Win":
+                winScreen.SetActive(true);
+                break;
+            case "Lose":
+                loseScreen.SetActive(true);
+                break;
+            case "Pause":
+                bool isActive = pauseScreen.activeInHierarchy;
+                pauseScreen.SetActive(!isActive);
+                break;
+        }
         Pausing();
     }
 
+
+
+    private void PausingInLevel()
+    {
+        GameCondition("Pause");
+    }
 }
