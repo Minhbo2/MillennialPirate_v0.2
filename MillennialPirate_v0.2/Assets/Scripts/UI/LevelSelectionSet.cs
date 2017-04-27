@@ -26,14 +26,24 @@ public class LevelSelectionSet : Set {
             else
                 levelBtn[i].GetComponent<Image>().sprite = sprite[1];
         }
+
+        NextBackButton.SetNextBackBtnFunction(Quit);
     }
 
 
 
-    public void LevelSelection()
+
+    public void LevelIndex(int levelIndex)
     {
+        LevelManager.LoadLevel(levelIndex);
         Game.Inst.WantsToBeInLoadingState = true;
         CloseSet();
     }
 
+
+    private void Quit()
+    {
+        Debug.Log("Quiting the Game!");
+        Application.Quit();
+    }
 }

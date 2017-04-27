@@ -19,7 +19,6 @@ public class LevelManager : Set
     private void Start()
     {
         FillingEnemyList();
-        LoadLevel(levelIndex);
     }
 
 
@@ -112,7 +111,7 @@ public class LevelManager : Set
             if (!HUDSet.Inst.winScreen.activeInHierarchy)
             {
                 //levelIndex++;
-                HUDSet.Inst.EndGameCondition("Win");
+                HUDSet.Inst.GameCondition("Win");
             }
         }
     }

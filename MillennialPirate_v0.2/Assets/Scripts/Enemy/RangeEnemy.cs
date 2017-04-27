@@ -38,11 +38,6 @@ public class RangeEnemy : MonoBehaviour {
     private void Start()
     {
         Flip();
-        //healthBarGO = ResourceManager.Create("UI Sprite/HUD/EnemyHealthBar");
-        //if (healthBarGO)
-        //    healthBarGO.GetComponent<EnemyHealthBar>().inst_RangeEnemy = gameObject;
-
-        //healthBarGO.transform.SetParent(Level.hudSet.HealthBarsAnchor.transform, false);
     }
 
 
@@ -82,18 +77,7 @@ public class RangeEnemy : MonoBehaviour {
 
                 break;
         }
-
-        // Transform the position of the enemy to set the position in the HUD
-        //SetHealthBarPosition();
     }
-
-
-
-    //private void SetHealthBarPosition()
-    //{
-    //    Vector3 transformedPosition = Game.Inst.WorldCamera.WorldToScreenPoint(gameObject.transform.position);
-    //    healthBarGO.transform.position = new Vector3(transformedPosition.x, transformedPosition.y + healthbarYOffset, transformedPosition.z);
-    //}
 
 
 
@@ -119,26 +103,18 @@ public class RangeEnemy : MonoBehaviour {
         StopAllCoroutines();
 
         if (newState == RangeEnemyState.idle)
-        {
             enemyAnim.SetBool("Idle", true);
-        }
         else if (newState == RangeEnemyState.walk)
         {
             enemyAnim.SetBool("Walk", true);
             StartCoroutine("MoveTowardTarget", SetTarget());
         }
         else if (newState == RangeEnemyState.attack)
-        {
             enemyAnim.SetBool("Attack", true);
-        }
         else if(newState == RangeEnemyState.die)
-        {
             enemyAnim.SetBool("Die", true);
-        }
         else if (newState == RangeEnemyState.getHit)
-        {
             enemyAnim.SetBool("GetHit", true);
-        }
     }
 
 

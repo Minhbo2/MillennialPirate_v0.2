@@ -44,7 +44,7 @@ public class PlayerHealth : MonoBehaviour {
 
         yield return new WaitForSeconds(3.0f);
 
-        HUDSet.Inst.EndGameCondition("Lose");
+        HUDSet.Inst.GameCondition("Lose");
 
         maxHealth = 3;
         currentHealth = 3;
