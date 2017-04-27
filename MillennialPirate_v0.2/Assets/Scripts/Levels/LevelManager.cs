@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class LevelManager : Set
 { 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 87a0ec749f6b9b6d7a411ed1de45fb50eddddc1e
     public  static HUDSet           hudSet      = null;
+=======
+>>>>>>> be533233285d8df6b6a44e06c9e593cedf862325
     private GameObject              enemy;
     [SerializeField]
     private List<GameObject>        enemyList   = new List<GameObject>();
@@ -36,7 +42,6 @@ public class LevelManager : Set
     public static void LoadLevel(int index)
     {
         level   = ResourceManager.Create("Prefab/Level/Level" + index);
-        hudSet  = SetManager.OpenSet<HUDSet>();
     }
 
 

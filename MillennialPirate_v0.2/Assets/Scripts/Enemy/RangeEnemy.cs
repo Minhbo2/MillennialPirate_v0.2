@@ -19,13 +19,13 @@ public class RangeEnemy : MonoBehaviour {
     private SpriteRenderer  enemySpriteRenderer;
 
     [SerializeField] private float startDelayTime;
-    private float startDelayTimer;
+    private float startDelayTimer = 1.5f;
 
     [SerializeField] private float attackDelayTime;
-    private float attackDelayTimer;
+    private float attackDelayTimer = 2f;
 
-    public  float           healthbarYOffset = 5.0f;
-    private GameObject      healthBarGO;
+    //public  float           healthbarYOffset = 5.0f;
+    //private GameObject      healthBarGO;
 
 
     private void Awake()
@@ -38,11 +38,11 @@ public class RangeEnemy : MonoBehaviour {
     private void Start()
     {
         Flip();
-        healthBarGO = ResourceManager.Create("UI Sprite/HUD/EnemyHealthBar");
-        if (healthBarGO)
-            healthBarGO.GetComponent<EnemyHealthBar>().inst_RangeEnemy = gameObject;
+        //healthBarGO = ResourceManager.Create("UI Sprite/HUD/EnemyHealthBar");
+        //if (healthBarGO)
+        //    healthBarGO.GetComponent<EnemyHealthBar>().inst_RangeEnemy = gameObject;
 
-        healthBarGO.transform.SetParent(LevelManager.hudSet.HealthBarsAnchor.transform, false);
+        //healthBarGO.transform.SetParent(Level.hudSet.HealthBarsAnchor.transform, false);
     }
 
 
@@ -84,16 +84,16 @@ public class RangeEnemy : MonoBehaviour {
         }
 
         // Transform the position of the enemy to set the position in the HUD
-        SetHealthBarPosition();
+        //SetHealthBarPosition();
     }
 
 
 
-    private void SetHealthBarPosition()
-    {
-        Vector3 transformedPosition = Game.Inst.WorldCamera.WorldToScreenPoint(gameObject.transform.position);
-        healthBarGO.transform.position = new Vector3(transformedPosition.x, transformedPosition.y + healthbarYOffset, transformedPosition.z);
-    }
+    //private void SetHealthBarPosition()
+    //{
+    //    Vector3 transformedPosition = Game.Inst.WorldCamera.WorldToScreenPoint(gameObject.transform.position);
+    //    healthBarGO.transform.position = new Vector3(transformedPosition.x, transformedPosition.y + healthbarYOffset, transformedPosition.z);
+    //}
 
 
 

@@ -36,7 +36,7 @@ public class Arrow : MonoBehaviour {
         {
             var hitVFX = ResourceManager.Create("Prefab/Misc/HitVFX");
             hitVFX.transform.position = transform.position;
-            // accessing player inst and -- player's health
+            //Player.currentHealth--;
             Destroy(this.gameObject);
         }
     }

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     private GameObject player;
 
-    private Animator playerAnim;
+    public Animator playerAnim;
 
     private Animation playerIdle;
     private Animation playerLightAttack;
