@@ -1,0 +1,454 @@
+fileFormatVersion: 2
+guid: eebdce2b64173aa4ca4b2ea76b1ed0be
+timeCreated: 1493746597
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: MeleeEnemy_Sprites_Attack_T_0
+    21300002: MeleeEnemy_Sprites_Attack_T_2
+    21300004: MeleeEnemy_Sprites_Attack_T_3
+    21300006: MeleeEnemy_Sprites_Attack_T_5
+    21300008: MeleeEnemy_Sprites_Attack_T_6
+    21300010: MeleeEnemy_Sprites_Attack_T_7
+    21300012: MeleeEnemy_Sprites_Attack_T_8
+    21300014: MeleeEnemy_Sprites_Attack_T_9
+    21300016: MeleeEnemy_Sprites_Attack_T_13
+    21300018: MeleeEnemy_Sprites_Attack_T_14
+    21300020: MeleeEnemy_Sprites_Attack_T_15
+    21300022: MeleeEnemy_Sprites_Attack_T_16
+    21300024: MeleeEnemy_Sprites_Attack_T_17
+    21300026: MeleeEnemy_Sprites_Attack_T_18
+    21300028: MeleeEnemy_Sprites_Attack_T_20
+    21300030: MeleeEnemy_Sprites_Attack_T_25
+    21300032: MeleeEnemy_Sprites_Attack_T_37
+    21300034: MeleeEnemy_Sprites_Attack_T_38
+    21300036: MeleeEnemy_Sprites_Attack_T_45
+    21300038: MeleeEnemy_Sprites_Attack_T_46
+    21300040: MeleeEnemy_Sprites_Attack_T_65
+    21300042: MeleeEnemy_Sprites_Attack_T_66
+    21300044: MeleeEnemy_Sprites_Attack_T_67
+    21300046: MeleeEnemy_Sprites_Attack_T_68
+    21300048: MeleeEnemy_Sprites_Attack_T_69
+    21300050: MeleeEnemy_Sprites_Attack_T_70
+    21300052: MeleeEnemy_Sprites_Attack_T_71
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_0
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 1413
+        width: 84
+        height: 92
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11622023}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_2
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 1396
+        width: 123
+        height: 110
+      alignment: 9
+      pivot: {x: 0.32956082, y: 0.23920454}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_3
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 1386
+        width: 117
+        height: 125
+      alignment: 9
+      pivot: {x: 0.3774028, y: 0.28521094}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_5
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 1394
+        width: 112
+        height: 123
+      alignment: 9
+      pivot: {x: 0.42118725, y: 0.22191589}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_6
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 1165
+        width: 111
+        height: 122
+      alignment: 9
+      pivot: {x: 0.4211873, y: 0.2219159}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_7
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 1164
+        width: 114
+        height: 126
+      alignment: 9
+      pivot: {x: 0.4211873, y: 0.2219159}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_8
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 1161
+        width: 114
+        height: 140
+      alignment: 9
+      pivot: {x: 0.43179536, y: 0.20750035}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_9
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1226
+        width: 100
+        height: 154
+      alignment: 9
+      pivot: {x: 0.42531005, y: -0.24953629}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_13
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 1018
+        width: 100
+        height: 130
+      alignment: 9
+      pivot: {x: 0.41173112, y: -0.52370936}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_14
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 1021
+        width: 100
+        height: 134
+      alignment: 9
+      pivot: {x: 0.4117311, y: -0.5237094}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_15
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 1022
+        width: 100
+        height: 128
+      alignment: 9
+      pivot: {x: 0.4117311, y: -0.5237094}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_16
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1004
+        width: 100
+        height: 128
+      alignment: 9
+      pivot: {x: 0.4117311, y: -0.5237094}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_17
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 721
+        width: 186
+        height: 115
+      alignment: 9
+      pivot: {x: 0.6977022, y: 0.070152745}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_18
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 729
+        width: 216
+        height: 142
+      alignment: 9
+      pivot: {x: 0.6769241, y: -0.0017425107}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_20
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 729
+        width: 192
+        height: 143
+      alignment: 9
+      pivot: {x: 0.6334922, y: 0.00160356}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_25
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 729
+        width: 175
+        height: 147
+      alignment: 9
+      pivot: {x: 0.6611935, y: 0.0040166946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_37
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 494
+        width: 169
+        height: 155
+      alignment: 9
+      pivot: {x: 0.67759526, y: 0.030990304}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_38
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 494
+        width: 151
+        height: 157
+      alignment: 9
+      pivot: {x: 0.61498576, y: 0.030345358}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_45
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 494
+        width: 80
+        height: 98
+      alignment: 9
+      pivot: {x: 0.43235245, y: 0.04671556}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_46
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 494
+        width: 77
+        height: 98
+      alignment: 9
+      pivot: {x: 0.411438, y: 0.05465667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_65
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 263
+        width: 77
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_66
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 263
+        width: 77
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_67
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 263
+        width: 77
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_68
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 263
+        width: 77
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_69
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 32
+        width: 78
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_70
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 32
+        width: 79
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MeleeEnemy_Sprites_Attack_T_71
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 32
+        width: 78
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
