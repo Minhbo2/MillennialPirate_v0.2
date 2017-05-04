@@ -87,4 +87,39 @@ public class HUDSet : Set {
     {
         GameCondition("Pause");
     }
+
+    public void OnLeftPressed()
+    {
+        LevelManager.level.CurrentPlayer._LeftButtonDown();
+    }
+
+    public void OnLeftUp()
+    {
+        LevelManager.level.CurrentPlayer._LeftButtonUp();
+    }
+
+    public void OnRightPressed()
+    {
+        LevelManager.level.CurrentPlayer._RightButtonDown();
+    }
+
+    public void OnRightUp()
+    {
+        LevelManager.level.CurrentPlayer._RightButtonUp();
+    }
+
+    public void OnDodgePressed()
+    {
+        LevelManager.level.CurrentPlayer._Dodge();
+    }
+
+    public void OnLightAttackPressed()
+    {
+        LevelManager.level.CurrentPlayer._LightAttack();
+    }
+
+    public void OnHeavyAttackPressed()
+    {
+        LevelManager.level.CurrentPlayer._HeavyAttack();
+    }
 }

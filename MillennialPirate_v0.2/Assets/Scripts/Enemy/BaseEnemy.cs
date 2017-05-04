@@ -14,10 +14,9 @@ public enum EnemyState1
 
 public class BaseEnemy : MonoBehaviour
 {
-    [SerializeField]
-    protected float
-    m_health = 5,
-    m_speed = 1.5f;
+
+    public static int m_health = 5;
+    public static float m_speed = 1.5f;
 
     [SerializeField]
     private Transform rootTransform;
@@ -61,8 +60,9 @@ public class BaseEnemy : MonoBehaviour
 
         if (inRange == false)
         {
-           
-           transform.position += (playerTrans - rootTransform.position).normalized * m_speed * Time.deltaTime;
+
+            //transform.position += (playerTrans - rootTransform.position).normalized * m_speed * Time.deltaTime;
+            this.transform.position = Vector2.MoveTowards(transform.position, playerTrans, m_speed * Time.deltaTime);
           
         }
 

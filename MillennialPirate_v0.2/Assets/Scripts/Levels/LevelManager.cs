@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LevelManager : Set
 { 
 
     private GameObject              enemy;
-    [SerializeField]
-    private List<GameObject>        enemyList   = new List<GameObject>();
-    private static GameObject       level       = null;
+    [SerializeField] private List<GameObject>        enemyList   = new List<GameObject>();
+    [NonSerialized] public static Level       level       = null;
     private bool                    canSpawn    = true;
     public  static int              levelIndex  = 0;
     private float                   levelTimer  = 60;
@@ -34,21 +34,27 @@ public class LevelManager : Set
 
     public static void LoadLevel(int index)
     {
-        level   = ResourceManager.Create("Prefab/Level/Level" + index);
+        GameObject levelGO = ResourceManager.Create("Prefab/Level/Level" + index);
+
+        if (levelGO)
+            level = levelGO.GetComponent<Level>();
     }
-
-
-
 
     IEnumerator SpawnEnemy()
     {
         if (canSpawn == true)
         {
             canSpawn        = false;
-            float ranTime   = Random.Range(3.0f, 5.0f);
+            float ranTime   = UnityEngine.Random.Range(3.0f, 5.0f);
             yield return new WaitForSeconds(ranTime);
 
-            enemy           = enemyList[Random.Range(0, enemyList.Count)];
+            enemy           = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
+
+            if(enemy.tag == "MeleeEnemy")
+            {
+                Instantiate(enemy, (new Vector2(GettingEnemySpawnLocation().position.x, GettingEnemySpawnLocation().position.y - 2.0f)), Quaternion.identity);
+            }
+            else
             Instantiate(enemy, GettingEnemySpawnLocation().position, Quaternion.identity);
             canSpawn        = true;
         }

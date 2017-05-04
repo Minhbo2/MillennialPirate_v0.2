@@ -6,7 +6,7 @@ public class Level : MonoBehaviour {
     [SerializeField]
     private         GameObject[]    spawnPos;
     public static   GameObject      hudSet;
-
+    public Player CurrentPlayer;
 
 
     private void Start()
