@@ -83,7 +83,7 @@ public class HUDSet : Set {
 
 
 
-    private void PausingInLevel()
+    public void PausingInLevel()
     {
         GameCondition("Pause");
     }
