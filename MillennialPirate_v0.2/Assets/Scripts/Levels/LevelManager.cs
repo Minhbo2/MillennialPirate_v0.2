@@ -49,6 +49,12 @@ public class LevelManager : Set
             yield return new WaitForSeconds(ranTime);
 
             enemy           = enemyList[Random.Range(0, enemyList.Count)];
+
+            if(enemy.tag == "MeleeEnemy")
+            {
+                Instantiate(enemy, (new Vector2(GettingEnemySpawnLocation().position.x, GettingEnemySpawnLocation().position.y - 2.0f)), Quaternion.identity);
+            }
+            else
             Instantiate(enemy, GettingEnemySpawnLocation().position, Quaternion.identity);
             canSpawn        = true;
         }

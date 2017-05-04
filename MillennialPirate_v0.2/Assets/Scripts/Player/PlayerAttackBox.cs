@@ -25,12 +25,16 @@ public class PlayerAttackBox : MonoBehaviour {
                 Destroy(other.gameObject);
             }
 
-            if (other.gameObject.tag == "RangeEnemy")
+            else if (other.gameObject.tag == "RangeEnemy")
             {
                 Destroy(other.gameObject);
             }
 
-            if (other.gameObject.tag == "Arrow")
+            else if (other.gameObject.tag == "Arrow")
+            {
+                Destroy(other.gameObject);
+            }
+            else if(other.gameObject.tag == "HeavyMeleeEnemy")
             {
                 Destroy(other.gameObject);
             }
