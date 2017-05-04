@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState1
+public enum EnemyState
 {
     ENEMY_ATTACK,
     ENEMY_WALKING,
@@ -52,7 +52,7 @@ public class BaseEnemy : MonoBehaviour
 
     }
 
-    EnemyState1 CurrentState = EnemyState1.ENEMY_WALKING;
+    EnemyState CurrentState = EnemyState.ENEMY_WALKING;
 
 	void Update ()
     {
@@ -68,23 +68,23 @@ public class BaseEnemy : MonoBehaviour
 
         switch (CurrentState)
         {
-            case EnemyState1.ENEMY_WALKING:
+            case EnemyState.ENEMY_WALKING:
          
                 break;
 
-            case EnemyState1.ENEMY_IDLE:
+            case EnemyState.ENEMY_IDLE:
                 StartCoroutine(IdleDelay());
                 break;
 
-            case EnemyState1.ENEMY_ATTACK:
+            case EnemyState.ENEMY_ATTACK:
                 StartCoroutine(AttackDelay());
                 break;
 
-            case EnemyState1.ENEMY_HIT:
+            case EnemyState.ENEMY_HIT:
 
                 break;
 
-            case EnemyState1.ENEMY_DEATH:
+            case EnemyState.ENEMY_DEATH:
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;              
 
@@ -92,7 +92,7 @@ public class BaseEnemy : MonoBehaviour
 
         if (m_health <= 0)
         {
-            CurrentState = EnemyState1.ENEMY_DEATH;
+            CurrentState = EnemyState.ENEMY_DEATH;
             Destroy(gameObject);
         }
 	}
@@ -104,12 +104,12 @@ public class BaseEnemy : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             inRange = true;
-            CurrentState = EnemyState1.ENEMY_ATTACK;
+            CurrentState = EnemyState.ENEMY_ATTACK;
         }
 
         if(collision.tag == "PlayerAttack")
         {
-            CurrentState = EnemyState1.ENEMY_HIT;
+            CurrentState = EnemyState.ENEMY_HIT;
         }
 
 
@@ -135,7 +135,7 @@ public class BaseEnemy : MonoBehaviour
 
         enemy_Anim.SetBool("attackTrigger", false);
 
-        CurrentState = EnemyState1.ENEMY_IDLE;
+        CurrentState = EnemyState.ENEMY_IDLE;
 
     }
 
@@ -149,11 +149,11 @@ public class BaseEnemy : MonoBehaviour
 
         enemy_Anim.SetBool("isIdle", false);
 
-        CurrentState = EnemyState1.ENEMY_ATTACK;
+        CurrentState = EnemyState.ENEMY_ATTACK;
 
     }
 
-    void EnemyStateChange (EnemyState1 stateChange)
+    void EnemyStateChange (EnemyState stateChange)
     {
         CurrentState = stateChange;
     }
