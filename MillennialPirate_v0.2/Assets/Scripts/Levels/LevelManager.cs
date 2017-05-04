@@ -108,8 +108,9 @@ public class LevelManager : Set
         if (currentTime < levelTimer)
         {
             currentTime += Time.deltaTime;
+            int displayTime = Mathf.RoundToInt(currentTime);
             time = currentTime / levelTimer;
-            HUDSet.Inst.progressText.text = currentTime.ToString() + "/60";
+            HUDSet.Inst.progressText.text = displayTime.ToString() + "%";
             HUDSet.Inst.progressBar.fillAmount = time;
         }
         else if (currentTime >= levelTimer) //and  player health is greater than 0

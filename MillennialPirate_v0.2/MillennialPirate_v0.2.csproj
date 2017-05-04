@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Enemy\Melee_Enemy_Attack.cs" />
     <Compile Include="Assets\Scripts\Enemy\RangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
+    <Compile Include="Assets\Scripts\Game\SplashIntro.cs" />
     <Compile Include="Assets\Scripts\Levels\Level.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />

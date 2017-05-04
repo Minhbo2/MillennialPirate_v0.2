@@ -51,8 +51,9 @@ public class Game : MonoBehaviour
                 // TODO: Add all of your initialization logic here                
                 // play splash screen 
                 // loading data if any
-
-                SetManager.OpenSet<LevelSelectionSet>((lss) => WantsToBeInWaitState = true);
+                GameObject splashIntro = ResourceManager.Create("Prefab/Misc/SplashIntro");
+                splashIntro.transform.position = Vector3.zero;
+                WantsToBeInWaitState = true;
 
                 // If we want to be in the wait state, do the state transition
                 if (WantsToBeInWaitState)
