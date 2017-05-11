@@ -94,7 +94,7 @@ public class EnemyClass : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "PlayerAttack")
+        if (other.tag == "PlayerAttackBox")
         {
             CurrentState = EnemyState.ENEMY_HIT;
         }

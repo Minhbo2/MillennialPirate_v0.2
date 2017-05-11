@@ -1,20 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 
-public enum EnemyState2
-{
-    ENEMY_ATTACK,
-    ENEMY_WALKING,
-    ENEMY_DEATH,
-    ENEMY_HIT,
-    ENEMY_IDLE
-}
+
 public class HeavyEnemy : Melee_Enemy_01
 {
 
-    private float yOffset = 0.3f;
+    private void Start()
+    {
+        yOffset = 0.3f;
+    }
 
     public override void Update()
     {
@@ -39,10 +34,13 @@ public class HeavyEnemy : Melee_Enemy_01
                 break;
 
             case EnemyState.ENEMY_HIT:
-
+                enemy_Anim.SetBool("isHit", true);
                 break;
 
             case EnemyState.ENEMY_DEATH:
+                enemy_Anim.SetBool("hasBeenKilled", false);
+                enemy_Anim.SetBool("isHit", false);
+                enemy_Anim.SetBool("isIdle", false);
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;
 
@@ -51,7 +49,7 @@ public class HeavyEnemy : Melee_Enemy_01
         if (health <= 0)
         {
             CurrentState = EnemyState.ENEMY_DEATH;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
