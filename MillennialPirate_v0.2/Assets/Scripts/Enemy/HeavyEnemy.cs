@@ -48,7 +48,7 @@ public class HeavyEnemy : Melee_Enemy_01
 
         }
 
-        if (m_health <= 0)
+        if (health <= 0)
         {
             CurrentState = EnemyState.ENEMY_DEATH;
             Destroy(gameObject);

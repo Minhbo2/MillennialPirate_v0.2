@@ -13,7 +13,7 @@ public class Melee_Enemy_01 : EnemyClass
 
     void Start ()
     {
-
+        health = 3;
         ChangingDirection();
         StartCoroutine(MoveTowardTarget(player.position));
         CurrentState = EnemyState.ENEMY_WALKING;
@@ -49,19 +49,26 @@ public class Melee_Enemy_01 : EnemyClass
                 break;
 
             case EnemyState.ENEMY_DEATH:
+                StopAllCoroutines();
+                enemy_Anim.SetBool("attackTrigger", false);
+                enemy_Anim.SetBool("isIdle", false);
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;              
 
         }
 
-        if (m_health <= 0)
+        if (health <= 0)
         {
             CurrentState = EnemyState.ENEMY_DEATH;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 	}
 
 
+    void DestroyThis()
+    {
+        Destroy(this.gameObject);
+    }
 
     protected IEnumerator AttackDelay ()
     {

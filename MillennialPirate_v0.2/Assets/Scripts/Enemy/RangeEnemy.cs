@@ -23,7 +23,7 @@ public class RangeEnemy : EnemyClass {
 
     private void Start()
     {
-        m_health    = 10;
+        health = 1;
         m_speed     = 1.5f;
 
         if (!enemy_Anim)
@@ -60,6 +60,11 @@ public class RangeEnemy : EnemyClass {
                 }
                 break;
         }
+
+        if(health <= 0)
+        {
+            ChangeCurrentState(EnemyState.ENEMY_DEATH);
+        }
     }
 
 
@@ -73,7 +78,7 @@ public class RangeEnemy : EnemyClass {
 
 
 
-    private void ChangeCurrentState(EnemyState newState)
+    public void ChangeCurrentState(EnemyState newState)
     {
         CurrentState = newState;
 
@@ -100,6 +105,10 @@ public class RangeEnemy : EnemyClass {
             enemy_Anim.SetBool("GetHit", true);
     }
 
+    public void DestroyThis()
+    {
+        Destroy(this.gameObject);
+    }
 
 
 

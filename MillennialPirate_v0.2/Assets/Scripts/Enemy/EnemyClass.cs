@@ -15,16 +15,13 @@ public class EnemyClass : MonoBehaviour
     protected EnemyState CurrentState = EnemyState.ENEMY_WALKING;
 
     [SerializeField]
-    protected int           m_health = 0;
-
-    [SerializeField]
     protected float         m_speed     = 0.0f;
 
     [SerializeField]
     protected Animator      enemy_Anim;
     protected Transform     player      = null;
 
-
+    public int health;
 
     private void Awake()
     {

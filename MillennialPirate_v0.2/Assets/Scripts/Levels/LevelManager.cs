@@ -111,8 +111,9 @@ public class LevelManager : Set
         if (currentTime < levelTimer)
         {
             currentTime += Time.deltaTime;
-            int displayTime = Mathf.RoundToInt(currentTime);
             time = currentTime / levelTimer;
+            float displayTime = time * 100;
+            displayTime = Mathf.RoundToInt(displayTime);
             HUDSet.Inst.progressText.text = displayTime.ToString() + "%";
             HUDSet.Inst.progressBar.fillAmount = time;
         }

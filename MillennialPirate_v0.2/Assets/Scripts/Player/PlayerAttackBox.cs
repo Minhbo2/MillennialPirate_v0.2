@@ -22,12 +22,13 @@ public class PlayerAttackBox : MonoBehaviour {
         {
             if (other.gameObject.tag == "MeleeEnemy")
             {
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
+                other.gameObject.GetComponent<Melee_Enemy_01>().health--;
             }
 
             else if (other.gameObject.tag == "RangeEnemy")
             {
-                Destroy(other.gameObject);
+                other.gameObject.GetComponent<RangeEnemy>().health--;
             }
 
             else if (other.gameObject.tag == "Arrow")
