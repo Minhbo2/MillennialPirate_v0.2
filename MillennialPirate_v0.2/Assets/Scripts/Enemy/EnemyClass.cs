@@ -3,8 +3,8 @@ using System.Collections;
 
 
 public class EnemyClass : MonoBehaviour
-/*{
-    public enum EnemyState
+{
+  public enum EnemyState
     {
         ENEMY_ATTACK,
         ENEMY_WALKING,
@@ -12,22 +12,34 @@ public class EnemyClass : MonoBehaviour
         ENEMY_HIT,
         ENEMY_IDLE
     }
-    EnemyState CurrentState = EnemyState.ENEMY_WALKING;
+    protected EnemyState CurrentState = EnemyState.ENEMY_WALKING;
 
-    public static int m_health = 0;
-    public static float m_speed = 0.0f;
+    [SerializeField]
+    protected int           m_health = 0;
 
-    private Animator enemy_Anim;
-    private Transform player;
+    [SerializeField]
+    protected float         m_speed     = 0.0f;
+
+    [SerializeField]
+    protected Animator      enemy_Anim;
+    protected Transform     player      = null;
+
+
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
-        enemy_Anim = GetComponent<Animator>();
+        player      = GameObject.Find("Player").transform;
+        enemy_Anim  = GetComponent<Animator>();
     }
 
 
 
+
+
+    public virtual void Update()
+    {
+
+    }
 
 
 
@@ -46,7 +58,7 @@ public class EnemyClass : MonoBehaviour
 
     protected IEnumerator MoveTowardTarget(Vector2 target)
     {
-        while (DistanceToTarget(target) >= 0.1f)
+        while (DistanceToTarget(target) >= 1.0f)
         {
             transform.position = Vector2.MoveTowards(transform.position, target, m_speed * Time.deltaTime);
             yield return DistanceToTarget(target);
@@ -57,7 +69,7 @@ public class EnemyClass : MonoBehaviour
 
 
 
-    protected void Flip()
+    protected void ChangingDirection()
     {
         if (player)
         {
@@ -81,18 +93,14 @@ public class EnemyClass : MonoBehaviour
 
 
 
+
+
     protected void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "PlayerAttackBox")
+        if (other.tag == "PlayerAttack")
         {
             CurrentState = EnemyState.ENEMY_HIT;
         }
-
-        //if (other.gameObject.tag == "Player")
-        //{
-        //    inRange = true;
-        //    CurrentState = EnemyState.ENEMY_ATTACK;
-        //}
     }
 }
 

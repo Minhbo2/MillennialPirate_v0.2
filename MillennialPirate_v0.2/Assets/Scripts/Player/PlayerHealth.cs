@@ -39,7 +39,15 @@ public class PlayerHealth : MonoBehaviour {
 
         yield return new WaitForSeconds(3.0f);
 
-        HUDSet.Inst.GameCondition("Lose");
+        GameObject winTexture = ResourceManager.Create("Prefab/Misc/LoseCutScene");
+        Renderer r = winTexture.GetComponent<Renderer>();
+        MovieTexture movie = (MovieTexture)r.material.mainTexture;
+        if (winTexture && r)
+        {
+            movie.Play();
+            movie.loop = true;
+            HUDSet.Inst.GameCondition("Lose");
+        }
 
         maxHealth = 3;
         currentHealth = 3;

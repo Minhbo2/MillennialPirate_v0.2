@@ -14,6 +14,7 @@ public class LevelManager : Set
     private float                   levelTimer  = 60;
     private float                   currentTime = 0;
     private float                   time;
+    private static GameObject       levelGO     = null;
 
 
     private void Start()
@@ -34,10 +35,12 @@ public class LevelManager : Set
 
     public static void LoadLevel(int index)
     {
-        GameObject levelGO = ResourceManager.Create("Prefab/Level/Level" + index);
+        if(levelGO)
+            Destroy(levelGO);
 
-        if (levelGO)
-            level = levelGO.GetComponent<Level>();
+        levelGO = ResourceManager.Create("Prefab/Level/Level" + levelIndex);
+        level = levelGO.GetComponent<Level>();
+        
     }
 
     IEnumerator SpawnEnemy()
@@ -118,7 +121,15 @@ public class LevelManager : Set
             if (!HUDSet.Inst.winScreen.activeInHierarchy)
             {
                 //levelIndex++;
-                HUDSet.Inst.GameCondition("Win");
+                GameObject      winTexture  = ResourceManager.Create("Prefab/Misc/WinCutScene");
+                Renderer        r           = winTexture.GetComponent<Renderer>();
+                MovieTexture    movie       = (MovieTexture)r.material.mainTexture;
+                if (winTexture && r)
+                {
+                    movie.Play();
+                    movie.loop = true;
+                    HUDSet.Inst.GameCondition("Win");
+                }
             }
         }
     }

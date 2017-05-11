@@ -1,80 +1,63 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RangeEnemy : MonoBehaviour {
-    
-    private enum RangeEnemyState { spawn, walk, attack, idle, die, getHit }
-    private RangeEnemyState r_Enemy     = RangeEnemyState.spawn;
+public class RangeEnemy : EnemyClass {
 
-    private int             health      = 10;
-    private float           speed       = 1.5f;
     [SerializeField]
     private Transform       arrowAnchor;
-    private Transform       player      = null;
-    [SerializeField]
-    private Animator        enemyAnim;
     [SerializeField]
     private GameObject      arrowPrefab;
-    [SerializeField]
-    private SpriteRenderer  enemySpriteRenderer;
 
     [SerializeField] private float startDelayTime;
-    private float startDelayTimer = 1.5f;
+    
+    private float startDelayTimer = 0;
 
     [SerializeField] private float attackDelayTime;
-    private float attackDelayTimer = 2f;
+
+    private float attackDelayTimer = 0;
 
     //public  float           healthbarYOffset = 5.0f;
     //private GameObject      healthBarGO;
 
 
-    private void Awake()
-    {
-        player  = GameObject.Find("Player").GetComponent<Transform>();
-    }
-
-
 
     private void Start()
     {
-        Flip();
+        m_health    = 10;
+        m_speed     = 1.5f;
+
+        if (!enemy_Anim)
+            enemy_Anim = transform.GetComponent<Animator>();
+
+        CurrentState    = EnemyState.ENEMY_IDLE;
+        player          = GameObject.Find("Player").GetComponent<Transform>();
+        ChangingDirection();
     }
 
 
 
 
 
-    private void Update()
+    public override void Update()
     {
-        switch (r_Enemy)
+        switch (CurrentState)
         {
-            case RangeEnemyState.spawn:
+            case EnemyState.ENEMY_IDLE:
                 startDelayTimer += Time.deltaTime;
 
                 if (startDelayTimer > startDelayTime)
-                    ChangeCurrentState(RangeEnemyState.walk);
+                    ChangeCurrentState(EnemyState.ENEMY_WALKING);
 
                 break;
-            case RangeEnemyState.idle:
 
-                break;
-            case RangeEnemyState.walk:
+            case EnemyState.ENEMY_WALKING:
                 attackDelayTimer += Time.deltaTime;
 
                 if (attackDelayTimer > attackDelayTime)
                 {
-                    ChangeCurrentState(RangeEnemyState.attack);
+                    ChangeCurrentState(EnemyState.ENEMY_ATTACK);
                     attackDelayTimer = 0;
                 }
-                break;
-            case RangeEnemyState.attack:
-                // Wait for attack animation to be complete
-                break;
-            case RangeEnemyState.getHit:
-
-                break;
-            case RangeEnemyState.die:
-
                 break;
         }
     }
@@ -84,60 +67,40 @@ public class RangeEnemy : MonoBehaviour {
 
     public void OnAttackCompleteAnimEvent()
     {
-        ChangeCurrentState(RangeEnemyState.walk);
+        ChangeCurrentState(EnemyState.ENEMY_WALKING);
     }
 
 
 
 
-    private void ChangeCurrentState(RangeEnemyState newState)
+    private void ChangeCurrentState(EnemyState newState)
     {
-        r_Enemy = newState;
+        CurrentState = newState;
 
-        enemyAnim.SetBool("Idle", false);
-        enemyAnim.SetBool("Attack", false);
-        enemyAnim.SetBool("Walk", false);
-        enemyAnim.SetBool("Die", false);
-        enemyAnim.SetBool("GetHit", false);
+        enemy_Anim.SetBool("Idle", false);
+        enemy_Anim.SetBool("Attack", false);
+        enemy_Anim.SetBool("Walk", false);
+        enemy_Anim.SetBool("Die", false);
+        enemy_Anim.SetBool("GetHit", false);
 
         StopAllCoroutines();
 
-        if (newState == RangeEnemyState.idle)
-            enemyAnim.SetBool("Idle", true);
-        else if (newState == RangeEnemyState.walk)
+        if (newState == EnemyState.ENEMY_IDLE)
+            enemy_Anim.SetBool("Idle", true);
+        else if (newState == EnemyState.ENEMY_WALKING)
         {
-            enemyAnim.SetBool("Walk", true);
+            enemy_Anim.SetBool("Walk", true);
             StartCoroutine("MoveTowardTarget", SetTarget());
         }
-        else if (newState == RangeEnemyState.attack)
-            enemyAnim.SetBool("Attack", true);
-        else if(newState == RangeEnemyState.die)
-            enemyAnim.SetBool("Die", true);
-        else if (newState == RangeEnemyState.getHit)
-            enemyAnim.SetBool("GetHit", true);
+        else if (newState == EnemyState.ENEMY_ATTACK)
+            enemy_Anim.SetBool("Attack", true);
+        else if(newState == EnemyState.ENEMY_DEATH)
+            enemy_Anim.SetBool("Die", true);
+        else if (newState == EnemyState.ENEMY_HIT)
+            enemy_Anim.SetBool("GetHit", true);
     }
 
 
-
-
-    private void Flip()
-    {
-        if (player)
-        {
-            float playerXPos        = player.position.x;
-            float transformXPos     = transform.position.x;
-            float yRot              = transform.eulerAngles.y;
-
-            if (transformXPos < playerXPos)
-            {
-                if (yRot == 0)
-                {
-                    yRot = 180;
-                    transform.eulerAngles = new Vector2(0, yRot);
-                }
-            }
-        }
-    }
 
 
 
@@ -157,26 +120,6 @@ public class RangeEnemy : MonoBehaviour {
         return target;
     }
 
-
-
-
-    private float DistanceToTarget(Vector2 target)
-    {
-        float distanceToTarget = Vector2.Distance(target, transform.position);
-        return distanceToTarget;
-    }
-
-
-
-
-    private IEnumerator MoveTowardTarget(Vector2 target)
-    {
-        while (DistanceToTarget(target) >= 0.1f)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-            yield return DistanceToTarget(target);
-        }
-    }
 
 
 

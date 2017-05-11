@@ -41,7 +41,7 @@ public class LevelSelectionSet : Set {
     }
 
 
-    private void Quit()
+    public void Quit()
     {
         Debug.Log("Quiting the Game!");
         Application.Quit();
