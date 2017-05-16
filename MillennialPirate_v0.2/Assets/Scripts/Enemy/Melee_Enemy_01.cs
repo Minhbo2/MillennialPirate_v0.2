@@ -1,9 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-
-
 
 public class Melee_Enemy_01 : EnemyClass
 {
@@ -18,12 +14,15 @@ public class Melee_Enemy_01 : EnemyClass
         ChangingDirection();
         StartCoroutine(MoveTowardTarget(player.position));
         CurrentState = EnemyState.ENEMY_WALKING;
+        EnemyHealthBar();
     }
 
 
 
 	public override void Update ()
     {
+        Vector2 hpPos = Game.Inst.UICamera.WorldToScreenPoint(new Vector2(transform.position.x, transform.position.y + 3.5f));
+        enemyHealthBar.transform.position = hpPos;
         Debug.Log(CurrentState);
         transform.position = new Vector2(transform.position.x, yOffset);
 
@@ -68,7 +67,6 @@ public class Melee_Enemy_01 : EnemyClass
         if (health <= 0)
         {
             CurrentState = EnemyState.ENEMY_DEATH;
-            //Destroy(gameObject);
         }
 	}
 

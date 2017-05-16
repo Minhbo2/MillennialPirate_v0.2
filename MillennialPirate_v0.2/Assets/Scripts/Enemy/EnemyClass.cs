@@ -15,11 +15,12 @@ public class EnemyClass : MonoBehaviour
     protected EnemyState CurrentState = EnemyState.ENEMY_WALKING;
 
     [SerializeField]
-    protected float         m_speed     = 0.0f;
+    protected float         m_speed         = 0.0f;
 
     [SerializeField]
     protected Animator      enemy_Anim;
-    protected Transform     player      = null;
+    protected Transform     player          = null;
+    protected GameObject    enemyHealthBar  = null;
 
     public int health;
 
@@ -88,6 +89,11 @@ public class EnemyClass : MonoBehaviour
 
 
 
+    protected void EnemyHealthBar()
+    {
+        enemyHealthBar = ResourceManager.Create("Prefab/Enemy/EnemyHealthBar");
+        enemyHealthBar.transform.SetParent(Game.Inst.hud.HealthBarsAnchor.transform, false);
+    }
 
 
 

@@ -19,17 +19,23 @@ public class Game : MonoBehaviour
 
     // The world camera
     public Camera WorldCamera;
+    public Camera UICamera;
 
     // Set the initial game state to initializing
     public GameState CurrentState = GameState.GAME_INITIALIZING;
 
     // Variables used for state transitions
     [NonSerialized]
-    public bool WantsToBeInWaitState = false;
+    public bool WantsToBeInWaitState    = false;
     [NonSerialized]
     public bool WantsToBeInLoadingState = false;
     [NonSerialized]
     public bool WantsToBeInRunningState = false;
+
+    public HUDSet               hud             = null;
+    public LevelManager         levelManager    = null;
+    public LevelSelectionSet    levelSelect     = null;
+    public DataManagerSet       dataManager     = null;
 
     void Awake()
     {
@@ -51,10 +57,11 @@ public class Game : MonoBehaviour
                 // TODO: Add all of your initialization logic here                
                 // play splash screen 
                 // loading data if any
-                GameObject splashIntro = ResourceManager.Create("Prefab/Misc/SplashIntro");
-                splashIntro.transform.position = Vector3.zero;
-                WantsToBeInWaitState = true;
+                dataManager                     = SetManager.OpenSet<DataManagerSet>();
+                GameObject splashIntro          = ResourceManager.Create("Prefab/Misc/SplashIntro");
+                splashIntro.transform.position  = Vector3.zero;
 
+                WantsToBeInWaitState = true;
                 // If we want to be in the wait state, do the state transition
                 if (WantsToBeInWaitState)
                     DoStateTransition(GameState.GAME_WAITING);
@@ -62,7 +69,7 @@ public class Game : MonoBehaviour
                 break;
             case GameState.GAME_WAITING:
                 // TODO: Go into this state and do nothing until the game is ready to run (for instance on the main menu or on the win/lose screens)
-
+          
                 // If we want to be in the loading state, do the state transition
                 if (WantsToBeInLoadingState)
                     DoStateTransition(GameState.GAME_LOADING);
@@ -70,8 +77,11 @@ public class Game : MonoBehaviour
                 break;
             case GameState.GAME_LOADING:
                 // TODO: Load the level
-                SetManager.OpenSet<LevelManager>((lm) => WantsToBeInRunningState = true);
-                DataUtility.LoadData();
+                hud             = SetManager.OpenSet<HUDSet>();
+                levelManager    = SetManager.OpenSet<LevelManager>();
+                LevelManager.LoadLevel();
+
+                WantsToBeInRunningState = true;
 
                 // If we want to be in the running state, do the state transition
                 if (WantsToBeInRunningState)

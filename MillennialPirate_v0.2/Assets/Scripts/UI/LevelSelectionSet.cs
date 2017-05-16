@@ -4,21 +4,15 @@ using UnityEngine.UI;
 
 public class LevelSelectionSet : Set {
     [SerializeField]private Button[] levelBtn;
-    public static int levelCompleted = 0;
 
     [SerializeField]private Sprite[] sprite;
 
-
-    private void Awake()
-    {
-        DataUtility.LoadData();
-    }
 
     private void Start()
     {
         for (var i = 0; i < levelBtn.Length; i++)
         {
-            if (i > levelCompleted)
+            if (i > Game.Inst.dataManager.levelUnlocked)
             {
                 levelBtn[i].GetComponent<Button>().enabled = false;
                 levelBtn[i].GetComponent<Image>().sprite = sprite[0];
@@ -35,8 +29,8 @@ public class LevelSelectionSet : Set {
 
     public void LevelIndex(int levelIndex)
     {
-        LevelManager.LoadLevel(levelIndex);
-        Game.Inst.WantsToBeInLoadingState = true;
+        Game.Inst.dataManager.levelSelected = levelIndex;
+        Game.Inst.WantsToBeInLoadingState   = true;
         CloseSet();
     }
 

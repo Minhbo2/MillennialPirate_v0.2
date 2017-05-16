@@ -4,16 +4,15 @@ using UnityEngine;
 public class EnemyHealthBar : MonoBehaviour {
 
     [SerializeField]
-    private Slider      hp_Slider;
-    private int         enemyMaxHealth      = 10;
-    private int         enemyCurrentHealth  = 0;
-    public  GameObject  inst_RangeEnemy     = null;
+    private Image       hp_Slider;
+    private float       enemyMaxHealth      = 10;
+    private float       enemyCurrentHealth  = 0;
 
 
     private void Start()
     {
         if (hp_Slider)
-            hp_Slider = hp_Slider.GetComponent<Slider>();
+            hp_Slider = hp_Slider.GetComponent<Image>();
 
         enemyCurrentHealth = enemyMaxHealth;
     }
@@ -22,12 +21,10 @@ public class EnemyHealthBar : MonoBehaviour {
     public void EnemyTakingDamage(int damageAmount)
     {
         enemyCurrentHealth -= damageAmount;
-        hp_Slider.value     = enemyCurrentHealth;
+        float healthPercentage = enemyCurrentHealth / enemyMaxHealth;
+        hp_Slider.fillAmount = healthPercentage;
 
-        if (enemyCurrentHealth <= 0 && inst_RangeEnemy)
-        {
+        if (enemyCurrentHealth <= 0)
             Destroy(gameObject);
-            Destroy(inst_RangeEnemy.gameObject);
-        }
     }
 }

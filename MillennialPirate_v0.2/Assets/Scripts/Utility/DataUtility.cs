@@ -14,15 +14,14 @@ public class DataUtility : MonoBehaviour {
             Data loadedData = (Data)bf.Deserialize(file);
             file.Close();
 
-            LevelSelectionSet.levelCompleted = loadedData.levelCompleted;
-            LevelManager.levelIndex          = loadedData.levelCompleted;
+            Game.Inst.dataManager.levelUnlocked = loadedData.levelCompleted;
         }
     }
 
     public static void SaveData()
     {
         Data newData = new Data();
-        newData.levelCompleted  = LevelSelectionSet.levelCompleted;
+        newData.levelCompleted  = Game.Inst.dataManager.levelUnlocked;
 
         BinaryFormatter bf      = new BinaryFormatter();
         FileStream file         = File.Create(Application.persistentDataPath + "/score.dat");

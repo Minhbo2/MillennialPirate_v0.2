@@ -1,19 +1,30 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Level : MonoBehaviour {
 
     [SerializeField]
-    private         GameObject[]    spawnPos;
-    public static   GameObject      hudSet;
-    public Player CurrentPlayer;
+    private GameObject[]    spawnPos;
+    private GameObject      currentBG = null;
+    public  Player          CurrentPlayer;
+    public  GameObject[]    bgArr;
+    public  GameObject      mainBG;
 
 
-    private void Start()
+
+
+
+    private void Awake()
     {
-        if (!hudSet)
-            hudSet = transform.FindChild("HUDSet").gameObject;
+        int levelSelected   = Game.Inst.dataManager.levelSelected;
+        currentBG           = bgArr[levelSelected];
+        GameObject objBG    = Instantiate(currentBG);
+        objBG.transform.SetParent(mainBG.transform, false);
     }
+
+
+
+
+
     /// <summary>
     /// getting a random location from the array
     /// remember to assign locations for every level prefab

@@ -3,23 +3,14 @@ using UnityEngine;
 
 public class HUDSet : Set {
 
-    public static HUDSet Inst {
-        get { return m_inst; }
-    } static HUDSet m_inst;
-
     public GameObject   HealthBarsAnchor;
     public Image        progressBar;
     public Text         progressText;
-    public GameObject   winScreen;
-    public GameObject   loseScreen;
-    public GameObject   pauseScreen;
+    public GameObject[] conditionScreen;
 
 
     private void Start()
     {
-        if (m_inst == null)
-            m_inst = this;
-
         NextBackButton.SetNextBackBtnFunction(PausingInLevel);
     }
 
@@ -56,7 +47,11 @@ public class HUDSet : Set {
 
     public void Retry()
     {
-        LevelManager.LoadLevel(LevelManager.levelIndex);
+        Reset();
+        PlayerHealth.currentHealth          = PlayerHealth.maxHealth;
+        PlayerHealth.reset                  = false;
+        Game.Inst.levelManager.currentTime  = 0;
+        Pausing();
     }
 
 
@@ -65,20 +60,31 @@ public class HUDSet : Set {
 
     public void GameCondition(string condition)
     {
-        switch (condition)
+        for (var i = 0; i < conditionScreen.Length; i++)
         {
-            case "Win":
-                winScreen.SetActive(true);
-                break;
-            case "Lose":
-                loseScreen.SetActive(true);
-                break;
-            case "Pause":
-                bool isActive = pauseScreen.activeInHierarchy;
-                pauseScreen.SetActive(!isActive);
-                break;
+            if (conditionScreen[i].name == condition)
+            {
+                bool isActive = conditionScreen[i].activeInHierarchy;
+                conditionScreen[i].SetActive(!isActive);
+            }
         }
         Pausing();
+    }
+
+
+
+    private void Reset()
+    {
+        foreach (GameObject obj in Game.Inst.levelManager.enemyObj)
+            Destroy(obj);
+
+        foreach (GameObject screen in conditionScreen)
+        {
+            if (screen.activeInHierarchy)
+                screen.SetActive(false);
+        }
+
+        Destroy(Game.Inst.levelManager.cutScene);
     }
 
 

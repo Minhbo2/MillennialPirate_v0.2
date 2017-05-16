@@ -7,14 +7,17 @@ public class LevelManager : Set
 { 
 
     private GameObject              enemy;
-    [SerializeField] private List<GameObject>        enemyList   = new List<GameObject>();
-    [NonSerialized] public static Level       level       = null;
+    [SerializeField] private List<GameObject>   enemyList   = new List<GameObject>();
+    [NonSerialized] public static Level         level       = null;
+
     private bool                    canSpawn    = true;
-    public  static int              levelIndex  = 0;
     private float                   levelTimer  = 60;
-    private float                   currentTime = 0;
+    public  float                   currentTime = 0;
     private float                   time;
     private static GameObject       levelGO     = null;
+    private float                   ranTime     = 0;
+    public  List<GameObject>        enemyObj    = new List<GameObject>();
+    public  GameObject              cutScene    = null;
 
 
     private void Start()
@@ -27,39 +30,34 @@ public class LevelManager : Set
     private void Update()
     {
         StartCoroutine(SpawnEnemy());
-        LevelTime();
+        LevelProgress();
     }
 
 
 
 
-    public static void LoadLevel(int index)
+    public static void LoadLevel()
     {
         if(levelGO)
             Destroy(levelGO);
 
-        levelGO = ResourceManager.Create("Prefab/Level/Level" + levelIndex);
-        level = levelGO.GetComponent<Level>();
-        
+        levelGO = ResourceManager.Create("Prefab/Level/MasterLevel");
+        level   = levelGO.GetComponent<Level>();
     }
+    
+
+
 
     IEnumerator SpawnEnemy()
     {
         if (canSpawn == true)
         {
-            canSpawn        = false;
-            float ranTime   = UnityEngine.Random.Range(3.0f, 5.0f);
+            canSpawn  = false;
             yield return new WaitForSeconds(ranTime);
-
-            enemy           = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
-
-            if(enemy.tag == "MeleeEnemy")
-            {
-                Instantiate(enemy, (new Vector2(GettingEnemySpawnLocation().position.x, GettingEnemySpawnLocation().position.y - 2.0f)), Quaternion.identity);
-            }
-            else
-            Instantiate(enemy, GettingEnemySpawnLocation().position, Quaternion.identity);
-            canSpawn        = true;
+            ManageEnemy();
+            GameObject newEnemy = Instantiate(enemy, GettingEnemySpawnLocation().position, Quaternion.identity);
+            enemyObj.Add(newEnemy);
+            canSpawn = true;
         }
     }
 
@@ -106,7 +104,7 @@ public class LevelManager : Set
 
 
 
-    private void LevelTime()
+    private void LevelProgress()
     {
         if (currentTime < levelTimer)
         {
@@ -114,24 +112,44 @@ public class LevelManager : Set
             time = currentTime / levelTimer;
             float displayTime = time * 100;
             displayTime = Mathf.RoundToInt(displayTime);
-            HUDSet.Inst.progressText.text = displayTime.ToString() + "%";
-            HUDSet.Inst.progressBar.fillAmount = time;
+            Game.Inst.hud.progressText.text = displayTime.ToString() + "%";
+            Game.Inst.hud.progressBar.fillAmount = time;
         }
         else if (currentTime >= levelTimer) //and  player health is greater than 0
         {
-            if (!HUDSet.Inst.winScreen.activeInHierarchy)
+            Game.Inst.dataManager.levelUnlocked++;
+            cutScene    = ResourceManager.Create("Prefab/Misc/WinCutScene");
+            Renderer r  = cutScene.GetComponent<Renderer>();
+            MovieTexture movie = (MovieTexture)r.material.mainTexture;
+            if (cutScene && r)
             {
-                //levelIndex++;
-                GameObject      winTexture  = ResourceManager.Create("Prefab/Misc/WinCutScene");
-                Renderer        r           = winTexture.GetComponent<Renderer>();
-                MovieTexture    movie       = (MovieTexture)r.material.mainTexture;
-                if (winTexture && r)
-                {
-                    movie.Play();
-                    movie.loop = true;
-                    HUDSet.Inst.GameCondition("Win");
-                }
+                movie.Play();
+                movie.loop = true;
+                Game.Inst.hud.GameCondition("Win");
             }
+            DataUtility.SaveData();
+        }
+    }
+
+
+    private void ManageEnemy()
+    {
+        int levelIndex = Game.Inst.dataManager.levelUnlocked;
+        switch (levelIndex)
+        {
+            case 0:
+                enemy = enemyList[0];
+                ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
+                break;
+            case 1:
+                enemy = enemyList[1];
+                break;
+            case 2:
+                enemy = enemyList[2];
+                break;
+            case 3:
+                enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
+                break;
         }
     }
 }

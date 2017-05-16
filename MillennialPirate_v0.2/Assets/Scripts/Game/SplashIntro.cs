@@ -8,8 +8,8 @@ public class SplashIntro : MonoBehaviour {
 
     private void Start()
     {
-        r = GetComponent<Renderer>();
-        movie = (MovieTexture)r.material.mainTexture;
+        r       = GetComponent<Renderer>();
+        movie   = (MovieTexture)r.material.mainTexture;
         movie.Play();
     }
 
@@ -17,7 +17,7 @@ public class SplashIntro : MonoBehaviour {
     {
         if (!movie.isPlaying)
         {
-            SetManager.OpenSet<LevelSelectionSet>();
+            Game.Inst.levelSelect = SetManager.OpenSet<LevelSelectionSet>((lss) => Game.Inst.WantsToBeInWaitState = true);
             Destroy(gameObject);
         }
     }

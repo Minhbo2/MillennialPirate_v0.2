@@ -8,8 +8,9 @@ public class PlayerHealth : MonoBehaviour {
 
     public Image hp;
 
-    public float maxHealth = 5;
-    public static float currentHealth = 5;
+    public static float maxHealth       = 5;
+    public static float currentHealth   = 5;
+    public static bool  reset           = false;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,7 @@ public class PlayerHealth : MonoBehaviour {
             currentHealth--;
         }
 
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && !reset)
         {
             StartCoroutine(Death());
         }
@@ -34,23 +35,21 @@ public class PlayerHealth : MonoBehaviour {
 
     IEnumerator Death ()
     {
+        reset = true;
         playerScript.playerAnim.SetBool("Idle", false);
         playerScript.playerAnim.SetBool("Dead", true);
 
         yield return new WaitForSeconds(3.0f);
 
-        GameObject winTexture = ResourceManager.Create("Prefab/Misc/LoseCutScene");
-        Renderer r = winTexture.GetComponent<Renderer>();
+        Game.Inst.levelManager.cutScene = ResourceManager.Create("Prefab/Misc/LoseCutScene");
+        GameObject loseCS = Game.Inst.levelManager.cutScene;
+        Renderer r = loseCS.GetComponent<Renderer>();
         MovieTexture movie = (MovieTexture)r.material.mainTexture;
-        if (winTexture && r)
+        if (loseCS && r)
         {
             movie.Play();
             movie.loop = true;
-            HUDSet.Inst.GameCondition("Lose");
+            Game.Inst.hud.GameCondition("Lose");
         }
-
-        maxHealth = 3;
-        currentHealth = 3;
-
     }
 }
