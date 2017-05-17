@@ -29,7 +29,7 @@ public class Melee_Enemy_01 : EnemyClass
         switch (CurrentState)
         {
             case EnemyState.ENEMY_WALKING:
-                enemy_Anim.SetBool("isHit", false);
+                
                 if (DistanceToTarget(player.position) <= 1.8f)
                 {
                     StopAllCoroutines();
@@ -38,27 +38,23 @@ public class Melee_Enemy_01 : EnemyClass
                 break;
 
             case EnemyState.ENEMY_IDLE:
+                enemy_Anim.SetBool("isIdle", true);
                 StartCoroutine(IdleDelay());
                 break;
 
             case EnemyState.ENEMY_ATTACK:
-                enemy_Anim.SetBool("isHit", false);
+                enemy_Anim.SetBool("attackTrigger", true);
                 StartCoroutine(AttackDelay());
                 break;
 
             case EnemyState.ENEMY_HIT:
                 StopAllCoroutines();
-                enemy_Anim.SetBool("attackTrigger", false);
-                enemy_Anim.SetBool("isIdle", false);
                 enemy_Anim.SetBool("isHit", true);
                 
                 break;
 
             case EnemyState.ENEMY_DEATH:
                 StopAllCoroutines();
-                enemy_Anim.SetBool("attackTrigger", false);
-                enemy_Anim.SetBool("isHit", false);
-                enemy_Anim.SetBool("isIdle", false);
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;              
 
@@ -69,6 +65,18 @@ public class Melee_Enemy_01 : EnemyClass
             CurrentState = EnemyState.ENEMY_DEATH;
         }
 	}
+
+
+
+    void ChangeState(EnemyState newState)
+    {
+        enemy_Anim.SetBool("attackTrigger", false);
+        enemy_Anim.SetBool("isHit", false);
+        enemy_Anim.SetBool("isIdle", false);
+        enemy_Anim.SetBool("hasBeenKilled", false);
+        CurrentState = newState;
+    }
+
 
 
     void DestroyThis()
@@ -84,8 +92,10 @@ public class Melee_Enemy_01 : EnemyClass
         if (DistanceToTarget(player.position) >= 1.8f)
         {
             StartCoroutine(MoveTowardTarget(player.position));
-            CurrentState = EnemyState.ENEMY_WALKING;
+            ChangeState(EnemyState.ENEMY_WALKING);
         }
+        else
+            ChangeState(EnemyState.ENEMY_ATTACK);
     }
 
 
@@ -93,28 +103,14 @@ public class Melee_Enemy_01 : EnemyClass
 
     protected IEnumerator AttackDelay ()
     {
-        enemy_Anim.SetBool("attackTrigger", true);
-
         yield return new WaitForSeconds(1.20f);
-
-        enemy_Anim.SetBool("attackTrigger", false);
-
-        CurrentState = EnemyState.ENEMY_IDLE;
-
+        ChangeState(EnemyState.ENEMY_IDLE);
     }
 
     protected IEnumerator IdleDelay ()
     {
-
-        
-        enemy_Anim.SetBool("isIdle", true);
-
         yield return new WaitForSeconds(1.25f);
-
-        enemy_Anim.SetBool("isIdle", false);
-
-        CurrentState = EnemyState.ENEMY_ATTACK;
-
+        ChangeState(EnemyState.ENEMY_ATTACK);
     }
 
 }

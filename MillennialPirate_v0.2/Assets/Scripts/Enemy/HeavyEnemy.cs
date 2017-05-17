@@ -13,6 +13,9 @@ public class HeavyEnemy : Melee_Enemy_01
 
     public override void Update()
     {
+        Vector2 hpPos = Game.Inst.UICamera.WorldToScreenPoint(new Vector2(transform.position.x, transform.position.y + 3.5f));
+        enemyHealthBar.transform.position = hpPos;
+        Debug.Log(CurrentState);
         transform.position = new Vector2(transform.position.x, yOffset);
 
         switch (CurrentState)
@@ -26,10 +29,12 @@ public class HeavyEnemy : Melee_Enemy_01
                 break;
 
             case EnemyState.ENEMY_IDLE:
+                enemy_Anim.SetBool("isIdle", true);
                 StartCoroutine(IdleDelay());
                 break;
 
             case EnemyState.ENEMY_ATTACK:
+                enemy_Anim.SetBool("attackTrigger", true);
                 StartCoroutine(AttackDelay());
                 break;
 
@@ -38,9 +43,7 @@ public class HeavyEnemy : Melee_Enemy_01
                 break;
 
             case EnemyState.ENEMY_DEATH:
-                enemy_Anim.SetBool("hasBeenKilled", false);
-                enemy_Anim.SetBool("isHit", false);
-                enemy_Anim.SetBool("isIdle", false);
+                StopAllCoroutines();
                 enemy_Anim.SetBool("hasBeenKilled", true);
                 break;
 
