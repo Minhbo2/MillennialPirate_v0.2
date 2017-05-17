@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void SwitchPlayerState (PlayerState newState)
+    public void SwitchPlayerState (PlayerState newState)
     {
         CurrentState = newState;
     }

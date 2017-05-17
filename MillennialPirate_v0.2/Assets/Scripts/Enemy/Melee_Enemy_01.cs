@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Melee_Enemy_01 : EnemyClass
 {
   
     protected bool inRange = false;
     protected float yOffset = -1.9f;
-
 
     void Start ()
     {

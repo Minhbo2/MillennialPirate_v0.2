@@ -7,11 +7,12 @@ public class HUDSet : Set {
     public Image        progressBar;
     public Text         progressText;
     public GameObject[] conditionScreen;
-
+    private Player playerScript;
 
     private void Start()
     {
         NextBackButton.SetNextBackBtnFunction(PausingInLevel);
+        playerScript = GameObject.Find("GameController").GetComponent<Player>();
     }
 
 
@@ -31,6 +32,12 @@ public class HUDSet : Set {
 
     public void BackToLevelSelect()
     {
+        PlayerHealth.currentHealth = PlayerHealth.maxHealth;
+        playerScript.playerAnim.SetBool("Dead", false);
+        playerScript.playerAnim.SetBool("Idle", true);
+
+        PlayerHealth.reset = false;
+
         GameObject[] sceneGO = FindObjectsOfType<GameObject>();
         foreach (GameObject obj in sceneGO)
         {
@@ -49,6 +56,9 @@ public class HUDSet : Set {
     {
         Reset();
         PlayerHealth.currentHealth          = PlayerHealth.maxHealth;
+        playerScript.playerAnim.SetBool("Dead", false);
+        playerScript.playerAnim.SetBool("Idle", true);
+        //playerScript.SwitchPlayerState(PlayerState.PLAYER_IDLE);
         PlayerHealth.reset                  = false;
         Game.Inst.levelManager.currentTime  = 0;
         Pausing();
@@ -75,6 +85,7 @@ public class HUDSet : Set {
 
     private void Reset()
     {
+
         foreach (GameObject obj in Game.Inst.levelManager.enemyObj)
             Destroy(obj);
 
