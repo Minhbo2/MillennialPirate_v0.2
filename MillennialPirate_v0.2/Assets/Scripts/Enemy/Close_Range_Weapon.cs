@@ -21,8 +21,8 @@ public class Close_Range_Weapon : MonoBehaviour
     {
         if (collide.gameObject.tag == "Player")
         {
-            if (!Player.isDodging)
-                PlayerHealth.currentHealth--;
+            if (!Player.isDodging) { } 
+                //PlayerHealth.currentHealth--;
         }
     }
 

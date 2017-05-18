@@ -28,8 +28,7 @@ public class Melee_Enemy_01 : EnemyClass
 
         switch (CurrentState)
         {
-            case EnemyState.ENEMY_WALKING:
-                
+            case EnemyState.ENEMY_WALKING:            
                 if (DistanceToTarget(player.position) <= 1.8f)
                 {
                     StopAllCoroutines();
@@ -79,7 +78,7 @@ public class Melee_Enemy_01 : EnemyClass
 
 
 
-    void DestroyThis()
+    public void DestroyThis()
     {
         Destroy(this.gameObject);
     }
