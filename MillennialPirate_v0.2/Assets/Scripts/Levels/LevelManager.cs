@@ -125,6 +125,7 @@ public class LevelManager : Set
             else if (currentTime >= levelTimer) //and  player health is greater than 0
             {
                 Game.Inst.dataManager.levelUnlocked++;
+                DataUtility.SaveData();
                 cutScene = ResourceManager.Create("Prefab/Misc/WinCutScene");
                 Renderer r = cutScene.GetComponent<Renderer>();
                 MovieTexture movie = (MovieTexture)r.material.mainTexture;
@@ -149,7 +150,7 @@ public class LevelManager : Set
         switch (levelIndex)
         {
             case 0:
-                enemy = enemyList[2];
+                enemy = enemyList[0];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
                 break;
             case 1:
@@ -162,5 +163,10 @@ public class LevelManager : Set
                 enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
                 break;
         }
+    }
+
+
+    public void Reset()
+    {
     }
 }

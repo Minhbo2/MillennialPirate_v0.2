@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class HUDSet : Set {
 
-    public GameObject   HealthBarsAnchor;
-    public Image        progressBar;
-    public Text         progressText;
-    public GameObject[] conditionScreen;
-    private Player playerScript;
+    public      GameObject      HealthBarsAnchor;
+    public      Image           progressBar;
+    public      Text            progressText;
+    public      GameObject[]    conditionScreen;
+    private     Player          playerScript;
+    private     Transform[]     enemyHealthBar;
 
     private void Start()
     {
@@ -94,6 +95,11 @@ public class HUDSet : Set {
             if (screen.activeInHierarchy)
                 screen.SetActive(false);
         }
+
+        enemyHealthBar = HealthBarsAnchor.transform.GetComponentsInChildren<Transform>();
+
+        foreach (Transform obj in enemyHealthBar)
+            Destroy(obj.gameObject);
 
         Destroy(Game.Inst.levelManager.cutScene);
     }
