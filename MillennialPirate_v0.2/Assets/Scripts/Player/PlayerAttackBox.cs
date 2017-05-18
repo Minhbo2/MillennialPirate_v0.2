@@ -36,7 +36,7 @@ public class PlayerAttackBox : MonoBehaviour {
             }
             else if(other.gameObject.tag == "HeavyMeleeEnemy")
             {
-                other.gameObject.GetComponent<HeavyEnemy>().health--;
+                other.gameObject.GetComponent<HeavyEnemy>().enemyHealth.enemyCurrentHealth -= 1;
             }
         }
     }

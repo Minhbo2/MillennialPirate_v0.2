@@ -11,11 +11,7 @@ public class Melee_Enemy_01 : EnemyClass
 
     void Start ()
     {
-        ChangingDirection();
-        StartCoroutine(MoveTowardTarget(player.position));
-        CurrentState = EnemyState.ENEMY_WALKING;
-        EnemyHealthBar();
-        enemyHealth = enemyHealthBar.GetComponent<EnemyHealthBar>();
+        Init();
         enemyHealth.enemyMaxHealth = 3;
     }
 
@@ -75,7 +71,7 @@ public class Melee_Enemy_01 : EnemyClass
 
 
 
-    void ChangeState(EnemyState newState)
+    protected void ChangeState(EnemyState newState)
     {
         enemy_Anim.SetBool("attackTrigger", false);
         enemy_Anim.SetBool("isHit", false);
@@ -93,9 +89,9 @@ public class Melee_Enemy_01 : EnemyClass
 
 
 
-    public void CheckState()
+    public void CheckState(float distance)
     {
-        if (DistanceToTarget(player.position) >= 1.8f)
+        if (DistanceToTarget(player.position) >= distance)
         {
             StartCoroutine(MoveTowardTarget(player.position));
             ChangeState(EnemyState.ENEMY_WALKING);
@@ -119,4 +115,15 @@ public class Melee_Enemy_01 : EnemyClass
         ChangeState(EnemyState.ENEMY_ATTACK);
     }
 
+
+
+
+    protected void Init()
+    {
+        ChangingDirection();
+        StartCoroutine(MoveTowardTarget(player.position));
+        CurrentState = EnemyState.ENEMY_WALKING;
+        EnemyHealthBar();
+        enemyHealth = enemyHealthBar.GetComponent<EnemyHealthBar>();
+    }
 }
