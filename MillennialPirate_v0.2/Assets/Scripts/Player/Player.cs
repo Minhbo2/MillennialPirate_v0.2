@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     private bool isSoundPlaying = false;
 
     public static bool isDodging = false;
+    public static bool isInvul = false;
 
     private bool isHoldingLeft = false;
     private bool isHoldingRight = false;
@@ -88,13 +89,14 @@ public class Player : MonoBehaviour
                 playerAnim.SetBool("HeavyAttack", false);
                 playerAnim.SetBool("Dodge", false);
                 playerAnim.SetBool("KnockBack", false);
+                playerAnim.SetBool("IsHit", false);
                 isSoundPlaying = false;
                 StopAllCoroutines();
 
                 break;
 
             case PlayerState.PLAYER_DODGE:
-
+                isDodging = true;
                 StartCoroutine(DodgeDuration());
 
                 break;
@@ -127,6 +129,9 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerState.PLAYER_HIT:
+
+                StartCoroutine(GotHit());
+
                 break;
 
             case PlayerState.PLAYER_DEAD:
@@ -360,11 +365,14 @@ public class Player : MonoBehaviour
 
     IEnumerator DodgeDuration()
     {
+        playerAnim.SetBool("Idle", false);
         isDodging = true;
+
+        Debug.Log(isDodging);
 
         playerAnim.SetBool("Dodge", true);
 
-        yield return new WaitForSeconds(0.44f);
+        yield return new WaitForSeconds(0.70f);
 
         isDodging = false;
 
@@ -384,6 +392,23 @@ public class Player : MonoBehaviour
         knockBacking = false;
 
         SwitchPlayerState(PlayerState.PLAYER_IDLE);
+    }
+
+    IEnumerator GotHit()
+    {
+
+        isInvul = true;
+
+        playerAnim.SetBool("IsHit", true);
+
+        yield return new WaitForSeconds(0.42f);
+
+        isInvul = false;
+
+        playerAnim.SetBool("IsHit", false);
+
+        SwitchPlayerState(PlayerState.PLAYER_IDLE);
+
     }
 
     
