@@ -19,6 +19,7 @@ public class LevelManager : Set
     public  List<GameObject>        enemyObj    = new List<GameObject>();
     public  GameObject              cutScene    = null;
 
+    private static bool isLevelDone = false;
 
     private void Start()
     {
@@ -38,6 +39,8 @@ public class LevelManager : Set
 
     public static void LoadLevel()
     {
+        isLevelDone = false;
+
         if(levelGO)
             Destroy(levelGO);
 
@@ -106,28 +109,36 @@ public class LevelManager : Set
 
     private void LevelProgress()
     {
-        if (currentTime < levelTimer)
+        if (isLevelDone == false)
         {
-            currentTime += Time.deltaTime;
-            time = currentTime / levelTimer;
-            float displayTime = time * 100;
-            displayTime = Mathf.RoundToInt(displayTime);
-            Game.Inst.hud.progressText.text = displayTime.ToString() + "%";
-            Game.Inst.hud.progressBar.fillAmount = time;
-        }
-        else if (currentTime >= levelTimer) //and  player health is greater than 0
-        {
-            Game.Inst.dataManager.levelUnlocked++;
-            cutScene    = ResourceManager.Create("Prefab/Misc/WinCutScene");
-            Renderer r  = cutScene.GetComponent<Renderer>();
-            MovieTexture movie = (MovieTexture)r.material.mainTexture;
-            if (cutScene && r)
+            if (currentTime < levelTimer)
             {
-                movie.Play();
-                movie.loop = true;
-                Game.Inst.hud.GameCondition("Win");
+                currentTime += Time.deltaTime;
+                time = currentTime / levelTimer;
+                float displayTime = time * 100;
+                displayTime = Mathf.RoundToInt(displayTime);
+                Game.Inst.hud.progressText.text = displayTime.ToString() + "%";
+                Game.Inst.hud.progressBar.fillAmount = time;
+
+                //isLevelDone = true;
             }
-            DataUtility.SaveData();
+            else if (currentTime >= levelTimer) //and  player health is greater than 0
+            {
+                Game.Inst.dataManager.levelUnlocked++;
+                cutScene = ResourceManager.Create("Prefab/Misc/WinCutScene");
+                Renderer r = cutScene.GetComponent<Renderer>();
+                MovieTexture movie = (MovieTexture)r.material.mainTexture;
+                if (cutScene && r)
+                {
+                    movie.Play();
+                    movie.loop = true;
+                    Game.Inst.hud.GameCondition("Win");
+                }
+
+                isLevelDone = true;
+
+                DataUtility.SaveData();
+            }
         }
     }
 
