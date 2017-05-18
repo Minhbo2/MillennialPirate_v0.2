@@ -149,7 +149,7 @@ public class LevelManager : Set
         switch (levelIndex)
         {
             case 0:
-                enemy = enemyList[0];
+                enemy = enemyList[2];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
                 break;
             case 1:
