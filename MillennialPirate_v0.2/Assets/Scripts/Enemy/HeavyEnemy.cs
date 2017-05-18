@@ -8,18 +8,14 @@ public class HeavyEnemy : Melee_Enemy_01
 
     private void Start()
     {
-        health = 3;
         yOffset = 0.3f;
-        ChangingDirection();
-        StartCoroutine(MoveTowardTarget(player.position));
-        CurrentState = EnemyState.ENEMY_WALKING;
-        EnemyHealthBar();
+        Init();
+        enemyHealth.enemyMaxHealth = 5;
     }
 
     public override void Update()
     {
         Vector2 hpPos = Game.Inst.UICamera.WorldToScreenPoint(new Vector2(transform.position.x, transform.position.y + 2.5f));
-        enemyHealthBar.transform.position = hpPos;
         Debug.Log(CurrentState);
         transform.position = new Vector2(transform.position.x, yOffset);
 
@@ -55,10 +51,20 @@ public class HeavyEnemy : Melee_Enemy_01
 
         }
 
-        if (health <= 0)
+        if (enemyHealth.enemyCurrentHealth <= 0)
         {
-            CurrentState = EnemyState.ENEMY_DEATH;
+            ChangeState(EnemyState.ENEMY_DEATH);
+            Destroy(enemyHealthBar);
         }
+        else
+            enemyHealthBar.transform.position = hpPos;
+    }
+
+
+
+    public void HeavyCheckState(float distance)
+    {
+        CheckState(distance);
     }
 
 }
