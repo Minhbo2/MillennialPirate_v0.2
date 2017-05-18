@@ -12,17 +12,17 @@ public class EnemyClass : MonoBehaviour
         ENEMY_HIT,
         ENEMY_IDLE
     }
-    protected EnemyState CurrentState = EnemyState.ENEMY_WALKING;
+    public EnemyState CurrentState = EnemyState.ENEMY_WALKING;
 
     [SerializeField]
     protected float         m_speed         = 0.0f;
 
     [SerializeField]
-    protected Animator      enemy_Anim;
-    protected Transform     player          = null;
-    protected GameObject    enemyHealthBar  = null;
+    protected   Animator      enemy_Anim;
+    protected   Transform     player          = null;
+    public      GameObject    enemyHealthBar  = null;
 
-    public int health;
+    public float health;
 
     private void Awake()
     {

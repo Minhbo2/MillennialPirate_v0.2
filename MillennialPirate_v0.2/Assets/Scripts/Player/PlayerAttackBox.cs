@@ -22,8 +22,7 @@ public class PlayerAttackBox : MonoBehaviour {
         {
             if (other.gameObject.tag == "MeleeEnemy")
             {
-                //Destroy(other.gameObject);
-                other.gameObject.GetComponent<Melee_Enemy_01>().health--;
+                other.gameObject.GetComponent<Melee_Enemy_01>().enemyHealth.enemyCurrentHealth -= 1;
             }
 
             else if (other.gameObject.tag == "RangeEnemy")

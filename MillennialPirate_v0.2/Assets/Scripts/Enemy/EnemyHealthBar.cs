@@ -5,26 +5,28 @@ public class EnemyHealthBar : MonoBehaviour {
 
     [SerializeField]
     private Image       hp_Slider;
-    private float       enemyMaxHealth      = 10;
-    private float       enemyCurrentHealth  = 0;
+    public float       enemyMaxHealth;
+    public float       enemyCurrentHealth;
 
 
     private void Start()
     {
-        if (hp_Slider)
+        if (!hp_Slider)
             hp_Slider = hp_Slider.GetComponent<Image>();
 
         enemyCurrentHealth = enemyMaxHealth;
     }
 
 
-    public void EnemyTakingDamage(int damageAmount)
+    private void Update()
     {
-        enemyCurrentHealth -= damageAmount;
-        float healthPercentage = enemyCurrentHealth / enemyMaxHealth;
-        hp_Slider.fillAmount = healthPercentage;
+        float healthPercentage  = enemyCurrentHealth / enemyMaxHealth;
+        hp_Slider.fillAmount    = healthPercentage;
+    }
 
-        if (enemyCurrentHealth <= 0)
-            Destroy(gameObject);
+
+    public void EnemyTakeDamage(int damage)
+    {
+        enemyCurrentHealth -= damage;
     }
 }
