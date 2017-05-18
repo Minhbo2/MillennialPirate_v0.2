@@ -29,12 +29,8 @@ public class Melee_Enemy_01 : EnemyClass
 
         switch (CurrentState)
         {
-<<<<<<< HEAD
-            case EnemyState.ENEMY_WALKING:
 
-=======
             case EnemyState.ENEMY_WALKING:            
->>>>>>> 507b361e440bf87c68d8712d8db36dde44afed92
                 if (DistanceToTarget(player.position) <= 1.8f)
                 {
                     StopAllCoroutines();
