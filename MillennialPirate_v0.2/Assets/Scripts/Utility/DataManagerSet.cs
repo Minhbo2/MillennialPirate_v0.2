@@ -9,4 +9,12 @@ public class DataManagerSet : Set {
     {
         DataUtility.LoadData();
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Game.Inst.dataManager.levelUnlocked = 0;
+            DataUtility.SaveData();
+        }
+    }
 }

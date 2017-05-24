@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class HUDSet : Set {
 
@@ -8,7 +9,7 @@ public class HUDSet : Set {
     public      Text            progressText;
     public      GameObject[]    conditionScreen;
     private     Player          playerScript;
-    private     Transform[]     enemyHealthBar;
+    public      List<GameObject> enemyHealthBar = new List<GameObject>();
 
     private void Start()
     {
@@ -45,8 +46,9 @@ public class HUDSet : Set {
             if (obj.tag != "GameController")
                 Destroy(obj);
         }
-
-        Game.Inst.CurrentState = GameState.GAME_INITIALIZING;
+        Game.Inst.levelSelect   = SetManager.OpenSet<LevelSelectionSet>();
+        Game.Inst.dataManager.levelSelected = 0;
+        Game.Inst.CurrentState  = GameState.GAME_WAITING;
         Pausing();
     }
 
@@ -62,6 +64,8 @@ public class HUDSet : Set {
         //playerScript.SwitchPlayerState(PlayerState.PLAYER_IDLE);
         PlayerHealth.reset                  = false;
         Game.Inst.levelManager.currentTime  = 0;
+        Game.Inst.levelManager.isLevelDone  = false;
+        progressBar.fillAmount              = Game.Inst.levelManager.currentTime;
         Pausing();
     }
 
@@ -86,7 +90,6 @@ public class HUDSet : Set {
 
     private void Reset()
     {
-
         foreach (GameObject obj in Game.Inst.levelManager.enemyObj)
             Destroy(obj);
 
@@ -96,11 +99,11 @@ public class HUDSet : Set {
                 screen.SetActive(false);
         }
 
-        enemyHealthBar = HealthBarsAnchor.transform.GetComponentsInChildren<Transform>();
-
-        foreach (Transform obj in enemyHealthBar)
+        foreach (GameObject obj in enemyHealthBar)
             Destroy(obj.gameObject);
 
+        enemyHealthBar.Clear();
+        Game.Inst.levelManager.enemyObj.Clear();
         Destroy(Game.Inst.levelManager.cutScene);
     }
 

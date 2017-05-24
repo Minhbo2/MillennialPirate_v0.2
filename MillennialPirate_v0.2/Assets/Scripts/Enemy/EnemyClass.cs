@@ -93,6 +93,7 @@ public class EnemyClass : MonoBehaviour
     {
         enemyHealthBar = ResourceManager.Create("Prefab/Enemy/EnemyHealthBar");
         enemyHealthBar.transform.SetParent(Game.Inst.hud.HealthBarsAnchor.transform, false);
+        Game.Inst.hud.enemyHealthBar.Add(enemyHealthBar);
     }
 
 

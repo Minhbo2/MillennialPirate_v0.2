@@ -10,12 +10,14 @@ public class DataUtility : MonoBehaviour {
         if (File.Exists(Application.persistentDataPath + "/game.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open((Application.persistentDataPath + "/score.dat"), FileMode.Open);
+            FileStream file = File.Open((Application.persistentDataPath + "/game.dat"), FileMode.Open);
             Data loadedData = (Data)bf.Deserialize(file);
             file.Close();
 
             Game.Inst.dataManager.levelUnlocked = loadedData.levelCompleted;
         }
+        else
+            Debug.Log("File does not exist");
     }
 
     public static void SaveData()
@@ -24,7 +26,7 @@ public class DataUtility : MonoBehaviour {
         newData.levelCompleted  = Game.Inst.dataManager.levelUnlocked;
 
         BinaryFormatter bf      = new BinaryFormatter();
-        FileStream file         = File.Create(Application.persistentDataPath + "/score.dat");
+        FileStream file         = File.Create(Application.persistentDataPath + "/game.dat");
         bf.Serialize(file, newData);
         file.Close();
     }

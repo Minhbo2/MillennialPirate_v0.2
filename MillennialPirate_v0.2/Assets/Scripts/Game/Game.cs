@@ -79,7 +79,7 @@ public class Game : MonoBehaviour
                 // TODO: Load the level
                 hud             = SetManager.OpenSet<HUDSet>();
                 levelManager    = SetManager.OpenSet<LevelManager>();
-                LevelManager.LoadLevel();
+                levelManager.LoadLevel();
 
                 WantsToBeInRunningState = true;
 

@@ -10,6 +10,7 @@ public class LevelManager : Set
     [SerializeField] private List<GameObject>   enemyList   = new List<GameObject>();
     [NonSerialized] public static Level         level       = null;
 
+    [SerializeField]
     private bool                    canSpawn    = true;
     private float                   levelTimer  = 60;
     public  float                   currentTime = 0;
@@ -19,7 +20,7 @@ public class LevelManager : Set
     public  List<GameObject>        enemyObj    = new List<GameObject>();
     public  GameObject              cutScene    = null;
 
-    private static bool isLevelDone = false;
+    public  bool                    isLevelDone = false;
 
     private void Start()
     {
@@ -37,7 +38,7 @@ public class LevelManager : Set
 
 
 
-    public static void LoadLevel()
+    public void LoadLevel()
     {
         isLevelDone = false;
 
@@ -56,8 +57,8 @@ public class LevelManager : Set
         if (canSpawn == true)
         {
             canSpawn  = false;
-            yield return new WaitForSeconds(ranTime);
             ManageEnemy();
+            yield return new WaitForSeconds(ranTime);
             GameObject newEnemy = Instantiate(enemy, GettingEnemySpawnLocation().position, Quaternion.identity);
             enemyObj.Add(newEnemy);
             canSpawn = true;
@@ -119,12 +120,13 @@ public class LevelManager : Set
                 displayTime = Mathf.RoundToInt(displayTime);
                 Game.Inst.hud.progressText.text = displayTime.ToString() + "%";
                 Game.Inst.hud.progressBar.fillAmount = time;
-
-                //isLevelDone = true;
             }
-            else if (currentTime >= levelTimer) //and  player health is greater than 0
+            else
             {
-                Game.Inst.dataManager.levelUnlocked++;
+                int levelUnlock = Game.Inst.dataManager.levelUnlocked;
+                if (levelUnlock <= Game.Inst.dataManager.levelSelected)
+                    Game.Inst.dataManager.levelUnlocked++;
+
                 DataUtility.SaveData();
                 cutScene = ResourceManager.Create("Prefab/Misc/WinCutScene");
                 Renderer r = cutScene.GetComponent<Renderer>();
@@ -135,10 +137,7 @@ public class LevelManager : Set
                     movie.loop = true;
                     Game.Inst.hud.GameCondition("Win");
                 }
-
                 isLevelDone = true;
-
-                DataUtility.SaveData();
             }
         }
     }
@@ -146,7 +145,7 @@ public class LevelManager : Set
 
     private void ManageEnemy()
     {
-        int levelIndex = Game.Inst.dataManager.levelUnlocked;
+        int levelIndex = Game.Inst.dataManager.levelSelected;
         switch (levelIndex)
         {
             case 0:
@@ -155,18 +154,16 @@ public class LevelManager : Set
                 break;
             case 1:
                 enemy = enemyList[1];
+                ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
                 break;
             case 2:
                 enemy = enemyList[2];
+                ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
                 break;
             case 3:
                 enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
+                ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
                 break;
         }
-    }
-
-
-    public void Reset()
-    {
     }
 }
