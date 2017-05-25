@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     public bool heavyAttacking = false;
     public bool knockBacking = false;
 
-    private AudioSource playerAudioSource;
+    public AudioSource playerAudioSource;
 
     private AudioClip lightAttackSound;
     private AudioClip heavyAttackSound;
@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+
         player = GameObject.Find("Player");
 
         playerAudioSource = GameObject.Find("Player").GetComponent<AudioSource>();
@@ -69,8 +70,7 @@ public class Player : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
         isPlayerFacingRight = false;
 
-        lightAttackSound = Resources.Load("Sounds/Player_Light_Attack") as AudioClip;
-        heavyAttackSound = Resources.Load("Sounds/Player_Heavy_Attack") as AudioClip;
+        heavyAttackSound = Resources.Load("Sounds/Player/Player_Heavy_Attack") as AudioClip;
 
         
     } 
@@ -81,7 +81,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(" Is invul" + isInvul);
 
         // Player STATE MACHINE
         switch (CurrentState)
@@ -346,8 +345,9 @@ public class Player : MonoBehaviour
             {
                 if (isDodging == false)
                 {
-                    isSoundPlaying = true;
+                    playerAudioSource.clip = heavyAttackSound;
                     playerAudioSource.PlayOneShot(heavyAttackSound);
+                    isSoundPlaying = true;
                 }
             }
         }

@@ -22,9 +22,18 @@ public class LevelManager : Set
 
     public  bool                    isLevelDone = false;
 
+    public AudioClip                loseSFX;
+    public AudioSource              audioSource;
+
+
+    public AudioClip                gameLevelClip;
+
     private void Start()
     {
         FillingEnemyList();
+        ManageEnemy();
+        audioSource.clip = gameLevelClip;
+        audioSource.Play();
     }
 
 
@@ -137,6 +146,7 @@ public class LevelManager : Set
                     movie.loop = true;
                     Game.Inst.hud.GameCondition("Win");
                 }
+                audioSource.PlayOneShot(loseSFX);
                 isLevelDone = true;
             }
         }
@@ -151,18 +161,27 @@ public class LevelManager : Set
             case 0:
                 enemy = enemyList[0];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
+                gameLevelClip = Resources.Load("Sounds/BGM/Level01_BGM") as AudioClip;
                 break;
             case 1:
                 enemy = enemyList[1];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
+                gameLevelClip = Resources.Load("Sounds/BGM/Level02_BGM") as AudioClip;
                 break;
             case 2:
                 enemy = enemyList[2];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
+                gameLevelClip = Resources.Load("Sounds/BGM/Level03_BGM") as AudioClip;
                 break;
             case 3:
                 enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
                 ranTime = UnityEngine.Random.Range(3.0f, 5.0f);
+                gameLevelClip = Resources.Load("Sounds/BGM/Level04_BGM") as AudioClip;
+                break;
+            case 4:
+                enemy = enemyList[UnityEngine.Random.Range(0, enemyList.Count)];
+                ranTime = UnityEngine.Random.Range(2.5f, 4.5f);
+                gameLevelClip = Resources.Load("Sounds/BGM/Level05_BGM") as AudioClip;
                 break;
         }
     }

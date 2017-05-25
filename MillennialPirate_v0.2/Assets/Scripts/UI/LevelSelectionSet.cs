@@ -7,7 +7,10 @@ public class LevelSelectionSet : Set {
 
     [SerializeField]private Sprite[] sprite;
 
+    public AudioClip levelSelectSound;
+    public AudioClip startSound;
 
+    private AudioSource audioSource;
     private void Start()
     {
         for (var i = 0; i < levelBtn.Length; i++)
@@ -22,6 +25,21 @@ public class LevelSelectionSet : Set {
         }
 
         NextBackButton.SetNextBackBtnFunction(Quit);
+        audioSource = transform.GetComponent<AudioSource>();
+        audioSource.clip = startSound;
+        audioSource.PlayOneShot(startSound);
+
+    }
+
+
+
+    private void Update()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = levelSelectSound;
+            audioSource.PlayOneShot(levelSelectSound);
+        }
     }
 
 

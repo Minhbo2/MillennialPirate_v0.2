@@ -121,9 +121,9 @@ public class RangeEnemy : EnemyClass {
         float xPos = player.position.x;
 
         if (xPos > transform.position.x)
-            moveDistance = 2;
+            moveDistance = 3;
         else
-            moveDistance = -2;
+            moveDistance = -3;
 
         Vector2 target = new Vector2(transform.position.x + moveDistance, transform.position.y);
         return target;

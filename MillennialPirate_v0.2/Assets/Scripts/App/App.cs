@@ -11,6 +11,9 @@ public class App : MonoBehaviour {
     [NonSerialized]
     public bool IsRunning = true;
 
+    public AudioSource PersistantAudio;
+    public AudioSource OneOffAudio;
+
     public App()
     {
         if (m_Inst == null)
