@@ -38,6 +38,7 @@ public class PlayerHealth : MonoBehaviour {
         reset = true;
         playerScript.playerAnim.SetBool("Idle", false);
         playerScript.playerAnim.SetBool("Dead", true);
+        Player.isInvul = false;
 
         yield return new WaitForSeconds(3.0f);
 

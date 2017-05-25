@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     private bool isHoldingLeft = false;
     private bool isHoldingRight = false;
+    private bool isAttacking = false;
 
     public bool isPlayerFacingRight = false;
 
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(" Is invul" + isInvul);
 
         // Player STATE MACHINE
         switch (CurrentState)
@@ -94,20 +96,22 @@ public class Player : MonoBehaviour
                 playerAnim.SetBool("KnockBack", false);
                 playerAnim.SetBool("IsHit", false);
                 isSoundPlaying = false;
-                StopAllCoroutines();
 
                 break;
 
             case PlayerState.PLAYER_DODGE:
-                isDodging = true;
-                StartCoroutine(DodgeDuration());
+                if (isDodging == false)
+                {
+                    StartCoroutine(DodgeDuration());
+                }
 
                 break;
 
             case PlayerState.PLAYER_ATTACK_LIGHT:
-
-                //StartCoroutine(LightAttackDuration());
-                StartCoroutine(AttackChain());
+                if (isAttacking == false)
+                {
+                    StartCoroutine(AttackChain());
+                }
 
                 break;
 
@@ -132,8 +136,10 @@ public class Player : MonoBehaviour
                 break;
 
             case PlayerState.PLAYER_HIT:
-
-                StartCoroutine(GotHit());
+                if (isInvul == false)
+                {
+                    StartCoroutine(GotHit());
+                }
 
                 break;
 
@@ -165,6 +171,7 @@ public class Player : MonoBehaviour
     {
         if(heavyAttacking == false || knockBacking == false)
         {
+            StopCoroutine("AttackChain");
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
             //player.GetComponent<SpriteRenderer>().flipX = true;
         }
@@ -176,6 +183,7 @@ public class Player : MonoBehaviour
     {
         if (heavyAttacking == false || knockBacking == false)
         {
+            StopCoroutine("AttackChain");
             SwitchPlayerState(PlayerState.PLAYER_IDLE);
             //player.GetComponent<SpriteRenderer>().flipX = false;
         }
@@ -273,39 +281,19 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    IEnumerator LightAttackDuration ()
-    {
-        if(isSoundPlaying == false)
-        {
-            if (isDodging == false)
-            {
-                isSoundPlaying = true;
-                playerAudioSource.PlayOneShot(lightAttackSound);
-            }
-        }
-
-        playerAnim.SetBool("LightAttack", true);
-
-        yield return new WaitForSeconds(0.5f);
-
-        playerAnim.SetBool("LightAttack", false);
-
-        SwitchPlayerState(PlayerState.PLAYER_IDLE);
-
-        isSoundPlaying = false;
-
-    }
-
     IEnumerator AttackChain ()
     {
-        if (heavyAttacking == false)
+        if (heavyAttacking == false && isDodging == false && isInvul == false)
         {
+            isAttacking = true;
+
             if (attackIndex == 1)
             {
                 playerAnim.SetBool("Attack", true);
 
                 yield return new WaitForSeconds(0.30f);
+
+                isAttacking = false;
 
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
 
@@ -322,6 +310,8 @@ public class Player : MonoBehaviour
 
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
 
+                isAttacking = false;
+
                 playerAnim.SetBool("Attack_02", false);
 
                 attackIndex++;
@@ -333,6 +323,8 @@ public class Player : MonoBehaviour
 
                 yield return new WaitForSeconds(0.30f);
 
+                isAttacking = false;
+
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
 
                 playerAnim.SetBool("Attack_03", false);
@@ -340,18 +332,23 @@ public class Player : MonoBehaviour
                 attackIndex = 1;
 
             }
+
+
         }
 
     }
 
     IEnumerator HeavyAttackDuration ()
     {
-        if (isSoundPlaying == false)
+        if (knockBacking == false)
         {
-            if (isDodging == false)
+            if (isSoundPlaying == false)
             {
-                isSoundPlaying = true;
-                playerAudioSource.PlayOneShot(heavyAttackSound);
+                if (isDodging == false)
+                {
+                    isSoundPlaying = true;
+                    playerAudioSource.PlayOneShot(heavyAttackSound);
+                }
             }
         }
 
@@ -370,18 +367,20 @@ public class Player : MonoBehaviour
 
     IEnumerator DodgeDuration()
     {
-        playerAnim.SetBool("Idle", false);
-        isDodging = true;
 
-        Debug.Log(isDodging);
+            playerAnim.SetBool("Idle", false);
+            isDodging = true;
 
-        playerAnim.SetBool("Dodge", true);
+            Debug.Log(isDodging);
 
-        yield return new WaitForSeconds(0.55f);
+            playerAnim.SetBool("Dodge", true);
 
-        isDodging = false;
+            yield return new WaitForSeconds(0.55f);
 
-        SwitchPlayerState(PlayerState.PLAYER_IDLE);
+            isDodging = false;
+
+            SwitchPlayerState(PlayerState.PLAYER_IDLE);
+        
     }
 
     IEnumerator KnockBackDuration()
@@ -401,18 +400,20 @@ public class Player : MonoBehaviour
 
     IEnumerator GotHit()
     {
+            StopCoroutine("AttackChain");
 
-        isInvul = true;
+            isInvul = true;
 
-        playerAnim.SetBool("IsHit", true);
+            playerAnim.SetBool("IsHit", true);
 
-        yield return new WaitForSeconds(0.42f);
+            yield return new WaitForSeconds(0.42f);
 
-        isInvul = false;
+            isInvul = false;
 
-        playerAnim.SetBool("IsHit", false);
+            playerAnim.SetBool("IsHit", false);
 
-        SwitchPlayerState(PlayerState.PLAYER_IDLE);
+            SwitchPlayerState(PlayerState.PLAYER_IDLE);
+        
 
     }
 
@@ -447,7 +448,7 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.A))
         {
-            if (heavyAttacking == false || knockBacking == false)
+            if (heavyAttacking == false && knockBacking == false)
             {
                 if (isHoldingLeft == true || isHoldingRight == true)
                 {
