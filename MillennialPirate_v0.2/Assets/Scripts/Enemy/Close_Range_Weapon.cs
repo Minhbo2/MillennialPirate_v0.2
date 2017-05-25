@@ -21,14 +21,12 @@ public class Close_Range_Weapon : MonoBehaviour
     {
         if (collide.gameObject.tag == "Player")
         {
-            if (!Player.isDodging || !Player.isInvul)
+            if (!Player.isDodging && !Player.isInvul)
             {
                 Player playerScript = GameObject.Find("GameController").GetComponent<Player>();
                 playerScript.SwitchPlayerState(PlayerState.PLAYER_HIT);
                 PlayerHealth.currentHealth--;
             }
-            if (!Player.isDodging) { } 
-                PlayerHealth.currentHealth--;
         }
     }
 

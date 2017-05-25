@@ -37,7 +37,7 @@ public class Arrow : MonoBehaviour {
             var hitVFX = ResourceManager.Create("Prefab/Misc/HitVFX");
             hitVFX.transform.position = transform.position;
 
-            if (!Player.isDodging || !Player.isInvul)
+            if (!Player.isDodging && !Player.isInvul)
             {
                 Player playerScript = GameObject.Find("GameController").GetComponent<Player>();
                 playerScript.SwitchPlayerState(PlayerState.PLAYER_HIT);

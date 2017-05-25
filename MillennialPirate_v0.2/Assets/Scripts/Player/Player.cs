@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     private bool isHoldingLeft = false;
     private bool isHoldingRight = false;
 
+    public bool isPlayerFacingRight = false;
+
     public int attackIndex = 1;
 
     private bool knockBackReady = false;
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
 
         //player.GetComponent<SpriteRenderer>().flipX = true;
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
+        isPlayerFacingRight = false;
 
         lightAttackSound = Resources.Load("Sounds/Player_Light_Attack") as AudioClip;
         heavyAttackSound = Resources.Load("Sounds/Player_Heavy_Attack") as AudioClip;
@@ -231,6 +234,7 @@ public class Player : MonoBehaviour
         isHoldingLeft = true;
         Debug.Log("holding L");
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
+        isPlayerFacingRight = false;
     }
 
     public void _RightButtonDown ()
@@ -238,6 +242,7 @@ public class Player : MonoBehaviour
         isHoldingRight = true;
         Debug.Log("holding R");
         player.transform.rotation = Quaternion.Euler(0, 180, 0);
+        isPlayerFacingRight = true;
     }
 
     public void _LeftButtonUp ()
@@ -372,7 +377,7 @@ public class Player : MonoBehaviour
 
         playerAnim.SetBool("Dodge", true);
 
-        yield return new WaitForSeconds(0.70f);
+        yield return new WaitForSeconds(0.55f);
 
         isDodging = false;
 
@@ -423,6 +428,7 @@ public class Player : MonoBehaviour
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
                 player.transform.rotation = Quaternion.Euler(0, 0, 0);
                 //player.GetComponent<SpriteRenderer>().flipX = false;
+                isPlayerFacingRight = false;
             }
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow))
@@ -432,6 +438,7 @@ public class Player : MonoBehaviour
                 SwitchPlayerState(PlayerState.PLAYER_IDLE);
                 //player.GetComponent<SpriteRenderer>().flipX = true;
                 player.transform.rotation = Quaternion.Euler(0, 180, 0);
+                isPlayerFacingRight = true;
             }
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow))
